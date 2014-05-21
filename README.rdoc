@@ -1,28 +1,106 @@
-== README
+IMPORTANT ASANA FEATURES
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+---VIEWS---
+- inital view is:
+Sidebar with project index
+Current project view
+Current task view
 
-Things you may want to cover:
+- also exists: Calendar view
 
-* Ruby version
+---MVP---
+Projects, Lists, and Tasks
+Comments
+Ability to Check-off completion
+Keyboard Shortcuts for add-new-task, complete-task
+Section header display via CSS
+Drag-sort tasks
+Collapse-menu Chevron buttons
+# Calendar view?
+# Search for text?
 
-* System dependencies
+---SCHEMA----
+Project:
+Title
+- Members
+- Lists
 
-* Configuration
+List:
+Title
+- Tasks
 
-* Database creation
+Task:
+Title
+Description
+Due_date
+- Owner (is_a User)
+Completed?
+# - Subtask (is another Model)
 
-* Database initialization
+Comment:
+Body
+- Author *is_a User
+Created_at
 
-* How to run the test suite
+User:
+Email
+# ProfilePicture
+# DisplayName (for display in task_owner)
+# Icon
 
-* Services (job queues, cache servers, search engines, etc.)
+---FEATURES---
 
-* Deployment instructions
+Phase 1:
+- Project model
+- List model
+- Task model
+- Comment model
+- User model
+- Required associations
+- Validation tests for models
 
-* ...
+- Share project with members
+- Assign tasks to members
+
+- Track completion (completed/incomplete tasks)
+- Can mark tasks complete/incomplete
+- Track time started/completed
+
+Phase 2:
+
+- Add new project by pressing "return" on Project view
+- Add new task by pressing "return" on Task view
+
+- Create section header with ending ':'
+- Clicking on any task pulls up Edit on that header
+
+- Clicking Project in sidebar renders that Project in Project View
+- Clicking Task in Project View renders that Task in Task View
+
+- Display Comments from all Project Members in Task View
+
+- Begin CSS Styling for Projects and Tasks
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Phase 3:
+- Search searches through all Tasks for desired text
+
+- Implement Asana keyboard shortcuts
+
+- Create Calendar View
+- Button to Switch to calendar view
+
+- Add due dates to Tasks
+- Clicking Project in Calendar View renders start/due dates for each task in that Project in Calendar View
+
+- Style Calendar View
+
+Phase 4:
+- Tweak, finalize CSS to reflect Asana look/feel
+- Create ~Asana logo (VIPasana? and yoga/hollywood-related tasks?)
+
+- Create demo login
+
+- Create seed data
+- Create buttons to auto-populate projects and tasks
+
