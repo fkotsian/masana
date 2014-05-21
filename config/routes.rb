@@ -1,5 +1,29 @@
 Rails.application.routes.draw do
 
+  get 'comments/index'
+
+  get 'comments/create'
+
+  get 'comments/update'
+
+  get 'comments/destroy'
+
+  get 'items/index'
+
+  get 'items/create'
+
+  get 'items/update'
+
+  get 'items/destroy'
+
+  get 'lists/index'
+
+  get 'lists/create'
+
+  get 'lists/update'
+
+  get 'lists/destroy'
+
   get 'projects/index'
 
   get 'projects/show'
