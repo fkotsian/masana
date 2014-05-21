@@ -15,14 +15,31 @@ ActiveRecord::Schema.define(version: 20140521192647) do
 
   create_table "comments", force: true do |t|
     t.text     "body",       null: false
-    t.integer  "task_id"
+    t.integer  "item_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["task_id"], name: "index_comments_on_task_id"
+  add_index "comments", ["item_id"], name: "index_comments_on_item_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "items", force: true do |t|
+    t.string   "title",                       null: false
+    t.text     "description"
+    t.date     "due_date"
+    t.boolean  "completed",   default: false
+    t.integer  "user_id"
+    t.integer  "list_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "items", ["completed"], name: "index_items_on_completed"
+  add_index "items", ["due_date"], name: "index_items_on_due_date"
+  add_index "items", ["list_id"], name: "index_items_on_list_id"
+  add_index "items", ["title"], name: "index_items_on_title"
+  add_index "items", ["user_id"], name: "index_items_on_user_id"
 
   create_table "lists", force: true do |t|
     t.string   "title",      null: false
@@ -43,21 +60,6 @@ ActiveRecord::Schema.define(version: 20140521192647) do
 
   add_index "projects", ["title"], name: "index_projects_on_title"
   add_index "projects", ["user_id"], name: "index_projects_on_user_id"
-
-  create_table "tasks", force: true do |t|
-    t.string   "title",                       null: false
-    t.text     "description"
-    t.date     "due_date"
-    t.boolean  "completed",   default: false
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasks", ["completed"], name: "index_tasks_on_completed"
-  add_index "tasks", ["due_date"], name: "index_tasks_on_due_date"
-  add_index "tasks", ["title"], name: "index_tasks_on_title"
-  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
