@@ -11,7 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521182445) do
+ActiveRecord::Schema.define(version: 20140521192034) do
+
+  create_table "lists", force: true do |t|
+    t.string   "title"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "lists", ["project_id"], name: "index_lists_on_project_id"
+
+  create_table "projects", force: true do |t|
+    t.string   "title",      null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "projects", ["title"], name: "index_projects_on_title"
+  add_index "projects", ["user_id"], name: "index_projects_on_user_id"
+
+  create_table "tasks", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.date     "due_date"
+    t.boolean  "completed"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
