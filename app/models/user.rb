@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
             source: :project,
             inverse_of: :members
 
+  def projects
+    self.owned_projects.join(self.projects_where_i_am_a_member)
+  end
+
 end

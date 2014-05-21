@@ -36,6 +36,7 @@ Due_date
 - Owner (is_a User)
 Completed?
 # - Subtask (is another Model)
+# Priority: 1,2,3 = green, yellow, red
 
 Comment:
 Body
