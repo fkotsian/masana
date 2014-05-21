@@ -11,16 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521192034) do
+ActiveRecord::Schema.define(version: 20140521192647) do
+
+  create_table "comments", force: true do |t|
+    t.text     "body"
+    t.integer  "task_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["task_id"], name: "index_comments_on_task_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "lists", force: true do |t|
-    t.string   "title"
+    t.string   "title",      null: false
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "lists", ["project_id"], name: "index_lists_on_project_id"
+  add_index "lists", ["title"], name: "index_lists_on_title"
 
   create_table "projects", force: true do |t|
     t.string   "title",      null: false
@@ -33,15 +45,18 @@ ActiveRecord::Schema.define(version: 20140521192034) do
   add_index "projects", ["user_id"], name: "index_projects_on_user_id"
 
   create_table "tasks", force: true do |t|
-    t.string   "title"
+    t.string   "title",                       null: false
     t.text     "description"
     t.date     "due_date"
-    t.boolean  "completed"
+    t.boolean  "completed",   default: false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "tasks", ["completed"], name: "index_tasks_on_completed"
+  add_index "tasks", ["due_date"], name: "index_tasks_on_due_date"
+  add_index "tasks", ["title"], name: "index_tasks_on_title"
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id"
 
   create_table "users", force: true do |t|
