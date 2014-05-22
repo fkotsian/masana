@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521192647) do
+ActiveRecord::Schema.define(version: 20140521220528) do
 
   create_table "comments", force: true do |t|
     t.text     "body",       null: false
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 20140521192647) do
 
   add_index "lists", ["project_id"], name: "index_lists_on_project_id"
   add_index "lists", ["title"], name: "index_lists_on_title"
+
+  create_table "project_memberships", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_memberships", ["member_id"], name: "index_project_memberships_on_member_id"
+  add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id"
 
   create_table "projects", force: true do |t|
     t.string   "title",      null: false

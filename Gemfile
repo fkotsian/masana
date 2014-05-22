@@ -34,6 +34,10 @@ group :development do
   gem 'binding_of_caller'
 end
 
+gem 'bootstrap-sass', '~> 3.1.1'
+gem 'jquery-ui-rails'
+gem 'ejs'
+
 gem 'annotate'
 gem 'devise'
 # gem 'addressable'
