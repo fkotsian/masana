@@ -4,7 +4,7 @@ window.Asana = {
   Views: {},
   Routers: {},
   initialize: function () {
-    new Asana.Routers.Router();
+    new Asana.Routers.Router({ $rootEl: $('#content') });
     Backbone.history.start();
   }
 };
@@ -56,4 +56,3 @@ Backbone.CompositeView = Backbone.View.extend({
     }
   }
 });
-

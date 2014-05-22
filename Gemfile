@@ -32,17 +32,22 @@ gem 'bcrypt', '~> 3.1.7'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'annotate'
+  gem 'devise'
 end
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'jquery-ui-rails'
+gem 'backbone-on-rails'
+# gem 'backbone-support'
 gem 'ejs'
 
-gem 'rails_12factor'
-gem 'pg'
+group :production do
+  gem 'rails_12factor'
+  gem 'pg'
+end
 
-gem 'annotate'
-gem 'devise'
+
 # gem 'addressable'
 # gem 'open-uri'
 

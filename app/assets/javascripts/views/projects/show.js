@@ -1,5 +1,5 @@
-Asana.Views.Project = Backbone.CompositeView.extend){
+Asana.Views.Project = Backbone.CompositeView.extend({
   template: JST['projects/show'],
   events: {},
 
-}
+});
