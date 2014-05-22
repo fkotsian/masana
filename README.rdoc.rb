@@ -59,6 +59,8 @@ Phase 1:
 - User model
 - Required associations
 - Validation tests for models
+DONE_IN_RAILS: 5/21/14
+DONE_IN_BACKBONE: ____
 
 - Share project with members
 - Assign tasks to members
