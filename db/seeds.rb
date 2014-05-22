@@ -8,7 +8,7 @@
 
 guest = User.create([
   { email: "warren@buffett.com",
-    encrypted_password: ""   }
+    password: "adollaraday"   }
 ])
 
 projects = Project.create([
@@ -27,20 +27,26 @@ projects = Project.create([
 lists = List.create([
   # 1
   { title: 'Berkshire',
-    project_id: 1         },
+    project_id: 1
+  },
   # 2
   { title: 'Save the Rainforest',
-    project_id: 2         },
+    project_id: 2
+  },
   # 3
-  { title: 'Find Polar Bears'
-    project_id: 3         },
+  { title: 'Find Polar Bears',
+    project_id: 3
+  },
   # 4
   { title: 'See if Sasquatch is real',
-    project_id: 3         },
+    project_id: 3
+  },
   # 5
   { title: 'Chase a Thunderstorm',
-    project_id: 3         },
+    project_id: 3
+  },
   # 6
   { title: 'Buy Munger a birthday present',
-    project_id: 3         }
+    project_id: 3
+  }
 ])
