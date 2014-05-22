@@ -12,5 +12,11 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
 
     this.$el.html(renderedContent);
     return this;
+  },
+
+  delete: function (event) {
+    var projID = $(event.target).attr('data-id');
+    var deletablProjt = this.collection.get(projID);
+    deletableProj.destroy();
   }
 })
