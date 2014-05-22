@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :owned_projects, dependent: :destroy
+  has_many :owned_projects, dependent: :destroy, inverse_of: :owner
   has_many :items, dependent: :nullify
   has_many :comments, dependent: :nullify
 
@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
             source: :project,
             inverse_of: :members
 
-  def projects
-    self.owned_projects.join(self.projects_where_i_am_a_member)
-  end
+  # def projects
+ #    self.owned_projects.join(self.projects_where_i_am_a_member)
+ #  end
 
 end
