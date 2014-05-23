@@ -3,12 +3,11 @@ Asana.Views._List = Backbone.View.extend({
   events: {
     // on click render in lists-pane
   },
+  tagName: 'li',
   render: function () {
     var renderedContent = this.template({ list: this.model });
     this.$el.html(renderedContent);
-
-    this.attachSubviews();
     return this;
   },
-  initialize: function () {}
+  initialize: function () {},
 })
