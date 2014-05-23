@@ -5,11 +5,18 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   routes: {
-    '': 'projectsIndex',
+    '': 'appContainer',
+    'projects/index': 'projectsIndex',
     'projects/new': 'projectNew',
     'projects/:id': 'projectShow',
     'projects/:id/lists': 'listsIndex',
     'projects/:id/lists/:list_id/items': 'itemsIndex'
+  },
+
+  appContainer: function() {
+    var appContainer = new Asana.Views.Container();
+    Asana.projects.fetch();
+    this.swapView(appContainer);
   },
 
   projectsIndex: function() {

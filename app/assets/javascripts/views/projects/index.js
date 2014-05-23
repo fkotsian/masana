@@ -5,6 +5,7 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
     this.listenTo(this.collection, 'add remove sync', this.render);
   },
 
+  className: 'projects',
   render: function () {
     var renderedContent = this.template({
       projects: this.collection
