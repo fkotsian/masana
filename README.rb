@@ -58,13 +58,17 @@ Phase 1:
 - Comment model
 - User model
 - Required associations
-- Validation tests for models
 DONE_IN_RAILS: 5/21/14
-DONE_IN_BACKBONE: ____
+- Validation tests for models
+DONE_IN_BACKBONE: 5/23/14 (except backbone validations)
 
 - Basic seed data
 - Heroku setup
 - Configure gemfile and application.js for Backbone
+DONE: 5/22/14
+
+- Basic CSS
+- Pane Popup on click
 
 - Share project with members
 - Assign tasks to members

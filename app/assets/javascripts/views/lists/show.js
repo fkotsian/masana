@@ -13,7 +13,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
   initialize: function () {
     var that = this;
-    debugger
     this.model.items().each(function (item) {
       var _item = new Asana.Items._Item;
       that.addSubview('#list-items', _item.render());

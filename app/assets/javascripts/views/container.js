@@ -3,7 +3,7 @@ Asana.Views.Container = Backbone.CompositeView.extend({
 
   events: {},
 
-  className: 'pane-box container',
+  className: 'pane-box row',
   render: function () {
     var renderedContent = this.template();
     this.$el.html(renderedContent);
