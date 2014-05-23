@@ -5,7 +5,8 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
     this.listenTo(this.collection, 'add remove sync', this.render);
   },
 
-  className: 'projects',
+  tagName: 'ul',
+  className: 'projects-index',
   render: function () {
     var renderedContent = this.template({
       projects: this.collection
@@ -17,7 +18,7 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
 
   delete: function (event) {
     var projID = $(event.target).attr('data-id');
-    var deletablProjt = this.collection.get(projID);
+    var deletableProj = this.collection.get(projID);
     deletableProj.destroy();
   }
 })

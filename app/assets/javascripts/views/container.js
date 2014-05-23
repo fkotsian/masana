@@ -8,11 +8,17 @@ Asana.Views.Container = Backbone.CompositeView.extend({
     var renderedContent = this.template();
     this.$el.html(renderedContent);
 
-    this.renderPanes();
+    this.attachSubviews();
+//    this.renderPanes();
     return this;
   },
 
   renderPanes: function() {
+
+
+  },
+
+  initialize: function () {
     var projectsPane = new Asana.Views.ProjectsIndex({ collection: Asana.projects });
     var listPane = new Backbone.View();
     var itemPane = new Backbone.View();
@@ -20,9 +26,7 @@ Asana.Views.Container = Backbone.CompositeView.extend({
     this.addSubview('#projects-pane', projectsPane.render());
     this.addSubview('#list-pane', listPane.render());
     this.addSubview('#item-pane', itemPane.render());
-  },
 
-  initialize: function () {
     //initialize listenTos here
   },
 })
