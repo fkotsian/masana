@@ -62,11 +62,17 @@ Phase 1:
 DONE_IN_RAILS: 5/21/14
 DONE_IN_BACKBONE: ____
 
+- Basic seed data
+- Heroku setup
+- Configure gemfile and application.js for Backbone
+
 - Share project with members
 - Assign tasks to members
 
 - Track completion (completed/incomplete tasks)
 - Can mark tasks complete/incomplete
+- Completion causes popup or model in bottom-left corner
+
 - Track time started/completed
 
 Phase 2:
