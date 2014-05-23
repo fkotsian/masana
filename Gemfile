@@ -33,9 +33,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'
-  gem 'devise'
 end
 
+gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'jquery-ui-rails'
 gem 'backbone-on-rails'
