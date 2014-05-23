@@ -2,10 +2,15 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
   template: JST['projects/index'],
 
   initialize: function () {
-    this.listenTo(this.collection, 'add remove sync', this.render);
+    this.listenTo(this.collection, 'remove sync', this.render);
+
+    var that = this;
+    this.collection.each(function (project) {
+      var _project = new Asana.Views._Project({ model: project });
+      that.addSubview('#projects', _project.render());
+    });
   },
 
-  tagName: 'ul',
   className: 'projects-index',
   render: function () {
     var renderedContent = this.template({
@@ -13,6 +18,7 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
     });
 
     this.$el.html(renderedContent);
+    this.attachSubviews();
     return this;
   },
 

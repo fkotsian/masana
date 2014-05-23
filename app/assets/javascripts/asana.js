@@ -4,6 +4,7 @@ window.Asana = {
   Views: {},
   Routers: {},
   initialize: function () {
+    // fetch new projects
     new Asana.Routers.Router({ $rootEl: $('#content') });
     Backbone.history.start();
   }

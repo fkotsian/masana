@@ -14,17 +14,37 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   appContainer: function() {
-    var appContainer = new Asana.Views.Container();
-    Asana.projects.fetch();
-    this.swapView(appContainer);
+
+    var that = this;
+    Asana.projects.fetch({
+      success: function (resp) {
+        console.log("Successfully fetched Projects in Container: " + resp);
+
+        var appContainer = new Asana.Views.Container();
+        that.swapView(appContainer);
+      },
+      error: function (resp) {
+        console.log("Error: " + resp);
+      }
+    });
+
   },
 
   projectsIndex: function() {
+    Asana.projects.fetch({
+      success: function (resp) {
+        console.log("Successfully fetched Projects in Index: " + resp);
+      },
+
+      error: function (resp) {
+        console.log("Error: " + resp);
+      }
+
+    });
+
     var projectsIndex = new Asana.Views.ProjectsIndex({
       collection: Asana.projects
     });
-
-    Asana.projects.fetch();
     this.swapView(projectsIndex);
   },
 
