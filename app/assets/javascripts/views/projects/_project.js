@@ -15,9 +15,9 @@ Asana.Views._Project = Backbone.CompositeView.extend({
     var that = this;
     lists.each(function (list) {
       var _list = new Asana.Views._List({ model: list });
-      // debugger
+      debugger
       // it doesn't know how to get the list title?
-      that.addSubview('#project-lists', _list.render())
+      that.addSubview('#project-lists', _list.render());
     })
 
   },

@@ -1,6 +1,4 @@
 Asana.Models.Project = Backbone.Model.extend({
-  url: '/api/projects/:id',
-
   parse: function(json) {
     if (json.lists) {
       this.lists().set(json.lists, { parse: true });

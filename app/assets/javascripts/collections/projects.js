@@ -1,6 +1,8 @@
 Asana.Collections.Projects = Backbone.Collection.extend({
   model: Asana.Models.Project,
+
   url: '/api/projects',
+
   getOrFetch: function(id) {
     var projects = this;
     var project = projects.get(id);
@@ -14,6 +16,7 @@ Asana.Collections.Projects = Backbone.Collection.extend({
 
     return project;
   },
+
   initialize: function() {},
 });
 
