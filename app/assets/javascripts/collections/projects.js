@@ -16,3 +16,5 @@ Asana.Collections.Projects = Backbone.Collection.extend({
   },
   initialize: function() {},
 });
+
+Asana.projects = new Asana.Collections.Projects();

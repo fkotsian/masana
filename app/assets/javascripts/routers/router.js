@@ -1,6 +1,7 @@
 Asana.Routers.Router = Backbone.Router.extend({
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
+    // perhaps use a $projectEl, $listEl, and $itemEl (in same vein as NewsReader sidebar)
   },
 
   routes: {
@@ -17,7 +18,7 @@ Asana.Routers.Router = Backbone.Router.extend({
     });
 
     Asana.projects.fetch();
-    this._swapView(projectsIndex);
+    this.swapView(projectsIndex);
   },
 
   swapView: function (newView) {
