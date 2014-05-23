@@ -1,7 +1,9 @@
 Asana.Collections.Projects = Backbone.Collection.extend({
   model: Asana.Models.Project,
-
   url: '/api/projects',
+  comparator: function (project) {
+    return project.get('created_at');
+  },
 
   getOrFetch: function(id) {
     var projects = this;

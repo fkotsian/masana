@@ -18,8 +18,7 @@ Asana.Routers.Router = Backbone.Router.extend({
     var that = this;
     Asana.projects.fetch({
       success: function (resp) {
-        // console.log("Successfully fetched Projects in Container: " + resp);
-        debugger
+        console.log("Successfully fetched Projects in Container: " + resp);
         var appContainer = new Asana.Views.Container();
         that.swapView(appContainer);
       },
