@@ -1,6 +1,23 @@
 <h1>This is the List display</h1>
 <h3><%= list.escape('title') %></h3>
-<p><%= list.escape('description') %></p>
+<p><%= list.escape('description') || 'Add a description' %></p>
 
-<nav class='navbar nav'></nav>
-<ul id='list-items'></ul>
+<nav class='navbar'>
+  <ul class='nav nav-pills' id='navbar'>
+    <li class='nav-element'><a href='#'>List</a></li>
+    <li class='nav-element'><a href='#'>Calendar</a></li>
+    <li class='nav-element'><a href='#'>View</a></li>
+    <li class='nav-element navbar-right'><a href='#'>New</a></li>
+  </ul>
+</nav>
+<table id='list-items'>
+  <tbody>
+    <tr class='list-item'>
+      <td class='item-drag-hook'>1</td>
+      <td class='item-completed-box'>|_|</td>
+      <td class='item-assignee-btn'>:O</td>
+      <td class='item-title'>Sample item</td>
+      <td class='item-collapse-btn'><--</td>
+    </tr>
+  </tbody>
+</table>

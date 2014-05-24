@@ -17,3 +17,100 @@
  */
 
 @import 'bootstrap';
+
+body {
+  font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
+  background-color: #ced7e0;
+//  background-image: -webkit-gradient(linear, left top, left bottom, from(#dde4ea), color-stop(100%, #ced7e0));
+//  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
+//  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: #212f40;
+  border-top: 1px solid #9cacbc;
+  height: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  line-height: 1;
+}
+
+div {
+  display: block;
+}
+
+.container {
+  /* BOX syntax? */
+  /* Internet Explorer 10 */
+  display:-ms-flexbox;
+  -ms-flex-pack:center;
+  -ms-flex-align:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+
+  /* Safari, Opera, and Chrome */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+  box-align:center;
+
+  ul {
+    list-style: none;
+    list-style-type: none;
+
+    li {
+      //display: box;
+    }
+  }
+
+
+  #projects-pane {
+
+
+    ul#projects {
+      li.project-list {
+        display: box;
+      }
+    }
+
+  }
+
+  #list-pane {
+    background-color: white;
+    border: 1px solid #9cacbc;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+
+    // transitions - can copy from asana
+
+    .navbar {
+      margin-bottom: 3px;
+    }
+
+    #list-items {
+      .list-item {
+//        display: box;
+
+        .item-collapse-btn {
+          float: right;
+        }
+      }
+
+    }
+
+
+  }
+
+  #item-pane{
+
+  }
+
+}
