@@ -68,6 +68,12 @@ DONE_IN_BACKBONE: 5/23/14 (except backbone validations)
 DONE: 5/22/14
 
 - Basic CSS
+- Begin CSS Styling for Projects and Tasks
+HALF_DONE: 5/23/14
+- More Basic CSS
+
+- Login_as_guest
+
 - Pane Popup on click
 
 - Share project with members
@@ -92,7 +98,6 @@ Phase 2:
 
 - Display Comments from all Project Members in Task View
 
-- Begin CSS Styling for Projects and Tasks
 
 
 Phase 3:
