@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140521220528) do
+ActiveRecord::Schema.define(version: 20140526215721) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
     t.text     "body",       null: false
@@ -21,8 +24,8 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["item_id"], name: "index_comments_on_item_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "comments", ["item_id"], name: "index_comments_on_item_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "items", force: true do |t|
     t.string   "title",                       null: false
@@ -33,13 +36,14 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.integer  "list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rank",                        null: false
   end
 
-  add_index "items", ["completed"], name: "index_items_on_completed"
-  add_index "items", ["due_date"], name: "index_items_on_due_date"
-  add_index "items", ["list_id"], name: "index_items_on_list_id"
-  add_index "items", ["title"], name: "index_items_on_title"
-  add_index "items", ["user_id"], name: "index_items_on_user_id"
+  add_index "items", ["completed"], name: "index_items_on_completed", using: :btree
+  add_index "items", ["due_date"], name: "index_items_on_due_date", using: :btree
+  add_index "items", ["list_id"], name: "index_items_on_list_id", using: :btree
+  add_index "items", ["title"], name: "index_items_on_title", using: :btree
+  add_index "items", ["user_id"], name: "index_items_on_user_id", using: :btree
 
   create_table "lists", force: true do |t|
     t.string   "title",      null: false
@@ -48,8 +52,8 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.datetime "updated_at"
   end
 
-  add_index "lists", ["project_id"], name: "index_lists_on_project_id"
-  add_index "lists", ["title"], name: "index_lists_on_title"
+  add_index "lists", ["project_id"], name: "index_lists_on_project_id", using: :btree
+  add_index "lists", ["title"], name: "index_lists_on_title", using: :btree
 
   create_table "project_memberships", force: true do |t|
     t.integer  "member_id"
@@ -58,8 +62,8 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.datetime "updated_at"
   end
 
-  add_index "project_memberships", ["member_id"], name: "index_project_memberships_on_member_id"
-  add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id"
+  add_index "project_memberships", ["member_id"], name: "index_project_memberships_on_member_id", using: :btree
+  add_index "project_memberships", ["project_id"], name: "index_project_memberships_on_project_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "title",      null: false
@@ -68,8 +72,8 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.datetime "updated_at"
   end
 
-  add_index "projects", ["title"], name: "index_projects_on_title"
-  add_index "projects", ["user_id"], name: "index_projects_on_user_id"
+  add_index "projects", ["title"], name: "index_projects_on_title", using: :btree
+  add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -86,7 +90,7 @@ ActiveRecord::Schema.define(version: 20140521220528) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

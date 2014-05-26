@@ -54,18 +54,22 @@ lists = List.create([
 list_1_items = List.first.items.create([
   { title: "Get Money",
     description: "Got to spend money to make money",
-    due_date: "1988/11/10"
+    due_date: "1988/11/10",
+    rank: 1
   },
   { title: "Get Paid",
     description: "Lil B said so",
-    due_date: Date.today.to_s
+    due_date: Date.today.to_s,
+    rank: 2
   },
   { title: "Drink Couvoisier with Jay",
     description: "HOV",
-    due_date: Date.today.to_s
+    due_date: Date.today.to_s,
+    rank: 3
   },
   { title: "Party on a Boat",
     description: "Need: Nautical-themed Pashmina Afghan",
-    due_date: Date.today.to_s
+    due_date: Date.today.to_s,
+    rank: 4
   },
 ])
