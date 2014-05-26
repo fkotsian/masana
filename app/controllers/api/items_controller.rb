@@ -36,7 +36,7 @@ module Api
 
     private
     def item_params
-      params.require(:item).permit(:title, :description, :due_date, :completed, :list_id, :user_id)
+      params.require(:item).permit(:title, :description, :due_date, :completed, :rank, :list_id, :user_id)
     end
   end
 end
