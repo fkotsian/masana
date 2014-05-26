@@ -1,7 +1,7 @@
 Asana.Views._Item = Backbone.View.extend({
   template: JST['items/_item'],
   events: {
-    'click': 'assignToUser',
+    'click a': 'assignToUser',
   },
 
   tagName: 'tr',
@@ -13,11 +13,11 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   assignToUser: function(event) {
-    debugger
     event.preventDefault();
     $link = $(event.target);
     userId = $link.parent().attr('data-id');
     console.log(userId);
     // console.log(this.model.get('id');
+    debugger
   },
 })
