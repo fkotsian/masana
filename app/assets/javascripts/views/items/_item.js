@@ -14,10 +14,10 @@ Asana.Views._Item = Backbone.View.extend({
 
   assignToUser: function(event) {
     event.preventDefault();
-    $link = $(event.target);
-    userId = $link.parent().attr('data-id');
-    console.log(userId);
-    // console.log(this.model.get('id');
-    debugger
+    // $link = $(event.target);
+    // userId = $link.parent().attr('data-id');
+    // console.log(userId);
+    console.log(this.model.get('rank'));
+    // debugger
   },
 })
