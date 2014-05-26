@@ -1,5 +1,6 @@
-<td class='item-drag-hook'><%= item.escape('id') %></td>
+<td class='item-drag-hook'><%= item.escape('cid') %></td>
 <td class='item-completed-box'>|_|</td>
-<td class='item-assignee-btn'>:O</td>
+<td class='item-assignee-btn' data-id='<%= item.escape("id")%> '>
+  <a href='#'>:O</a></td>
 <td class='item-title'><%= item.escape('title') %></td>
 <td class='item-collapse-btn'><--</td>

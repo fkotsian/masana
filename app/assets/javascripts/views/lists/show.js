@@ -1,6 +1,8 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
-  events: {},
+  events: {
+    'click a':'assignToUser',
+  },
 
   className: 'list',
   render: function () {
@@ -14,7 +16,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   initialize: function () {
     var that = this;
     this.model.items().each(function (item) {
-      var _item = new Asana.Items._Item;
+      var _item = new Asana.Views._Item({ model: item });
       that.addSubview('#list-items', _item.render());
     })
   },
