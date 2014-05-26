@@ -1,7 +1,6 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
-    'click a':'assignToUser',
   },
 
   className: 'list',
