@@ -18,6 +18,27 @@
 
 @import 'bootstrap';
 
+///* CSS reset */
+//body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+//    margin:0;
+//    padding:0;
+//}
+//
+//* {
+//  box-sizing: border-box;
+//}
+//html,body {
+//    margin: 0;
+//    padding: 0;
+//}
+
+p.success, p.errors, .no-margin {
+  margin-left: 0;
+  margin-right: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
 body {
   font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
   background-color: #ced7e0;
@@ -30,87 +51,203 @@ body {
   color: #212f40;
   border-top: 1px solid #9cacbc;
   height: 100%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+  width: 100%;
+//  box-sizing: border-box;
+//  -moz-box-sizing: border-box;
+//  -webkit-box-sizing: border-box;
 
   line-height: 1;
 }
 
-div {
-  display: block;
-}
-
 .container {
-  /* BOX syntax? */
-  /* Internet Explorer 10 */
-  display:-ms-flexbox;
-  -ms-flex-pack:center;
-  -ms-flex-align:center;
-
-  /* Firefox */
-  display:-moz-box;
-  -moz-box-pack:center;
-  -moz-box-align:center;
-
-  /* Safari, Opera, and Chrome */
-  display:-webkit-box;
-  -webkit-box-pack:center;
-  -webkit-box-align:center;
-
-  /* W3C */
-  display:box;
-  box-pack:center;
-  box-align:center;
+  width: 1580px;
 
   ul {
     list-style: none;
     list-style-type: none;
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+}
 
-    li {
-      //display: box;
+#projects-pane {
+  padding-left: 0;
+  padding-right: 0;
+
+  ul#projects {
+    li.project-title {
+      display: box;
+      font-size: 12px;
+    }
+
+    li.project-list {
+      text-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+      color: #212f40;
+      font-size: 12px;
+      line-height: 24px;
+      height: 24px;
+      margin-bottom: 1px;
+      border-left: 5px solid transparent;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 9px;
+      display: block;
+      overflow: hidden;
     }
   }
+}
 
+#list-pane {
+//  padding-left: 0;
+//  padding-right: 0;
+  height: 100%;
+  padding: 0;
 
-  #projects-pane {
+  background-color: white;
+  border: 1px solid #9cacbc;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 6px 0px 0px 0px;
+  -webkit-border-radius: 6px 0px 0px 0px;
 
+  // transitions - can copy from asana
 
-    ul#projects {
-      li.project-list {
-        display: box;
+  .list-pane-top {
+    padding: 15px;
+  }
+
+  .navbar {
+    display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -ms-flex-align: center;
+    width: 100%;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #cccccc;
+    background-color: #f2f2f2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(white), color-stop(100%, #f2f2f2));
+    background-image: -moz-linear-gradient(90deg, #f2f2f2 0%, white);
+    background-image: -ms-linear-gradient(90deg, #f2f2f2 0%, white);
+    box-shadow: 0px 1px #e5e5e5;
+    -moz-box-shadow: 0px 1px #e5e5e5;
+    -webkit-box-shadow: 0px 1px #e5e5e5;
+    height: 33px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #1a232e;
+
+    margin-bottom: 0;
+  }
+
+  #list-items {
+    border-top: 0px;
+
+    .list-item {
+      width: 100%;
+
+      .item-drag-hook {
+         text-align: center;
+         color: #999999;
+         text-shadow: 0 1px #ecf0f3;
+         font-size: 11px;
+         padding-top: 12px;
+         padding-left: 0px;
+         padding-right: 0px;
+         border-top: 1px solid transparent;
+         border-bottom: 1px solid transparent;
+         overflow: hidden;
+         background-color: #f2f2f2;
+       }
+
+      .item-completed-box, .item-assignee-btn, .item-collapse-btn {
+        text-align: center;
+        color: #999999;
+        font-size: 11px;
+        padding-top: 12px;
+        padding-left: 0px;
+        padding-right: 0px;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        overflow: hidden;
+      }
+
+      .item-assignee-btn {}
+
+      .item-title {}
+
+      .item-collapse-btn {
+        float: right;
+        padding-right: 16px;
       }
     }
 
   }
 
-  #list-pane {
-    background-color: white;
-    border: 1px solid #9cacbc;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
 
-    // transitions - can copy from asana
+}
 
-    .navbar {
-      margin-bottom: 3px;
-    }
+#item-pane{
+  background-color: white;
+  border: 1px solid #9cacbc;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  border-radius: 0px 6px 0px 0px;
+  -webkit-border-radius: 0px 6px 0px 0px;
 
-    #list-items {
-      .list-item {
-//        display: box;
+//  width: 350px;
 
-        .item-collapse-btn {
-          float: right;
-        }
-      }
-
-    }
-
-
+  li.nav-element {
+    border: 1px solid black;
   }
 
-  #item-pane{
+  .item-header {
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f2f2f2;
 
+    padding: 10px 14px 5px 14px;
+//    height: 33px;
+    border-radius: 0px 6px 0px 0px;
+    -webkit-border-radius: 0px 6px 0px 0px;
+
+    h1 {
+      padding-top: 0;
+    }
   }
 
+}
+
+.box-display {
+
+  border-top: 1px solid #9cacbc;
+  border-bottom: 1px solid #9cacbc;
+  margin-bottom: 1px;
+  height: 23px;
+
+  background-color: #ced7e0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ecf0f3), color-stop(100%, #ced7e0));
+  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
+  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
+
+  box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+  -moz-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+  -webkit-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+
+  color: #596573;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-shadow: 0 1px #ecf0f3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 100%;
+  padding: 7px 5px 3px 14px;
 }
