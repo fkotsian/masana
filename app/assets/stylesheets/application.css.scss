@@ -64,7 +64,7 @@ p.success, p.errors, .no-margin {
   }
 }
 
-.editable-title {
+h3.editable {
   @extend .editable;
   color: #212f40;
   border: 1px solid transparent;
@@ -74,7 +74,7 @@ p.success, p.errors, .no-margin {
   }
 }
 
-.editable-para {
+p.editable {
   @extend .editable;
   color: #999999;
   border: 0;
