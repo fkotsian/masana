@@ -83,7 +83,7 @@ BASICS_DONE: 5/26/14
 
 - Pane Popup on click
 
-- Share project with members
+# - Share project with members
 
 - Track completion (completed/incomplete tasks)
 - Can mark tasks complete/incomplete
