@@ -8,6 +8,9 @@ Asana.Views._Item = Backbone.View.extend({
   events: {
     'click input.submit-assignment-btn': 'assignToUser',
     'click input.assignee-email': 'clear',
+    'blur .postable': 'updateItem',
+    'submit .postable': 'updateItem',
+
   },
 
   tagName: 'tr',
@@ -16,6 +19,23 @@ Asana.Views._Item = Backbone.View.extend({
     var renderedContent = this.template({ item: this.model });
     this.$el.html(renderedContent);
     return this;
+  },
+
+  updateItem: function(event) {
+    event.preventDefault();
+    $postable = $(event.target);
+    $postable.toggleClass('postable');
+    $postable.toggleClass('editable');
+
+    formData = $postable.parent().serializeJSON();
+    this.model.save(formData, {
+      success: function(resp) {
+        console.log("Successfully updated .postable");
+      },
+      error: function(resp) {
+        console.log("Error in updating .postable: " + resp);
+      }
+    });
   },
 
   assignToUser: function(event) {
