@@ -23,8 +23,8 @@ Asana.Views._Item = Backbone.View.extend({
   updateItem: function(event) {
     event.preventDefault();
     $postable = $(event.target);
-    $postable.toggleClass('postable');
-    $postable.toggleClass('editable');
+    // $postable.toggleClass('postable');
+    // $postable.toggleClass('editable'); // don't need it bc are rerendering
 
     formData = $postable.parent().serializeJSON();
     this.model.save(formData, {

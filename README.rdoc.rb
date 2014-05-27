@@ -87,10 +87,20 @@ BASICS_DONE: 5/26/14
 _ITEMS_DONE: 5/26/14
 - also checkout how to do many subviews
 
-- Pane Popup on click
+- List Popup on click
+- Item Popup on click
+
+- Item .editable
+
+- New List-Item on return or keydown 'down'
+
+- Navigate among list-items via 'up' 'down'
 
 - Style Devise login/signup views using Bootstrap
 - Login_as_guest
+
+- Setup Pingdom or New Relic to keep Heroku active
+- Heroku keys are uploaded to github? Need Figaro?
 
 # - Share project with members
 

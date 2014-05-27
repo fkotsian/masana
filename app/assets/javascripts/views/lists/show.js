@@ -56,7 +56,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.model.save(formData, {
       success: function(resp) {
         console.log("Successfully updated .postable list: " + resp.item);
-      debugger
       },
       error: function(resp) {
         console.log("Error in updating .postable: " + resp);
