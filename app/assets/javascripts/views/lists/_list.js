@@ -1,7 +1,7 @@
 Asana.Views._List = Backbone.View.extend({
   template: JST['lists/_list'],
   events: {
-    // 'click .project-list': 'displayInListPane',
+    // 'click .renderable-list': 'displayInListPane',
     // on click render in lists-pane
   },
 
@@ -17,7 +17,7 @@ Asana.Views._List = Backbone.View.extend({
     // Backbone.history.navigate()  // no can't navigate bc still need projectspane
     // a way to bubble it up to ContainerView?
     // use a listener!
-    debugger
+    // debugger
     console.log("You clicked list id: " + this.model.get('id'));
     return this.model; //?
   },

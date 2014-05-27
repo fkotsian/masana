@@ -1,6 +1,8 @@
 Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
   template: JST['projects/index'],
-  events: {},
+  events: {
+    'click .renderable-list': 'renderInListPane',
+  },
 
   initialize: function () {
     this.listenTo(this.collection, 'remove sync', this.render);
@@ -22,6 +24,11 @@ Asana.Views.ProjectsIndex = Backbone.CompositeView.extend({
     this.attachSubviews();
     return this;
   },
+
+  // renderInListPane: function(event) {
+  //   listId =
+  //   Backbone.history.navigate('/lists/')
+  // },
 
   delete: function (event) {
     var projID = $(event.target).attr('data-id');

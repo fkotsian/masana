@@ -88,6 +88,10 @@ _ITEMS_DONE: 5/26/14
 - also checkout how to do many subviews
 
 - List Popup on click
+    - click _list sidebar -> notify #project_view to render _list in _list_pane
+    - event needs to be on containerView to render in list_pane
+    - _list view template in project needs css class .renderable
+    - need list_id or that model or the subview in order to know which to render
 - Item Popup on click
 
 - Item .editable

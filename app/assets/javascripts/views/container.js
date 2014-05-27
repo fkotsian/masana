@@ -1,7 +1,10 @@
 Asana.Views.Container = Backbone.CompositeView.extend({
   template: JST['container'],
 
-  events: {},
+  events: {
+    // 'click .renderable-list': 'renderInListPane',
+    // 'click .renderable-item': 'renderInItemPane', //not implemented yet
+  },
 
   className: 'pane-box row',
   render: function () {
@@ -29,4 +32,10 @@ Asana.Views.Container = Backbone.CompositeView.extend({
     //initialize listenTos here
     // make views listen to click events in the others to make them pop out
   },
+
+  renderInProjectPane: function(event) {},
+
+  renderInListPane: function(event) {},
+
+  renderInItemPane: function(event) {},
 })
