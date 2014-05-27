@@ -79,6 +79,12 @@ DONE: 5/26/14
     (- get list of project members on click (event, preventDefault, trigger) )
 BASICS_DONE: 5/26/14
 
+- Editable:
+  - ListShow
+  - on mouseover, outline (titles) (can be CSS: :hover)
+  - on click, replace with same classes as have, and current val as val() in form
+  - on any keydown, save view.model (and rerender => listen to view.model 'change'
+
 - Login_as_guest
 
 - Pane Popup on click

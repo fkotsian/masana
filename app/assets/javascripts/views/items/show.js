@@ -5,6 +5,9 @@ Asana.Views.ItemShow = Backbone.View.extend({
   render: function () {
     var renderedContent = this.template({ item: this.model });
     this.$el.html(renderedContent);
+
+    // attach comments as a subview; if this.model then attach
+
     return this;
   },
 })
