@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :owned_projects, dependent: :destroy, inverse_of: :owner
-  has_many :items, dependent: :nullify
+  has_many :owned_items, class_name: 'Item', dependent: :nullify
   has_many :comments, dependent: :nullify
 
   has_many :project_memberships

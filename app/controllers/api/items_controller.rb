@@ -22,6 +22,13 @@ module Api
 
     def update
       @item = Item.find(params[:id])
+
+      if params[:newAssigneeEmail]
+        email = params[:newAssigneeEmail]
+        new_assignee = User.find_by_email(email)
+        params[:item][:user_id] = new_assignee.id
+      end
+
       if @item.update_attributes(item_params)
         render partial: 'api/items/item', locals: { item: @item }
       else

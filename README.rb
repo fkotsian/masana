@@ -69,15 +69,21 @@ DONE: 5/22/14
 
 - Basic CSS
 - Begin CSS Styling for Projects and Tasks
-HALF_DONE: 5/23/14
 - More Basic CSS
+DONE: 5/26/14
+- Assign tasks to members
+    - show User''s favicon or initials in 'assign to member slot'
+    -- has to pass User to Item... dislike (use jbuilder)
+
+    (- can remove assignee on click 'X' inside 'Assign Member' popup)
+    (- get list of project members on click (event, preventDefault, trigger) )
+BASICS_DONE: 5/26/14
 
 - Login_as_guest
 
 - Pane Popup on click
 
 - Share project with members
-- Assign tasks to members
 
 - Track completion (completed/incomplete tasks)
 - Can mark tasks complete/incomplete
