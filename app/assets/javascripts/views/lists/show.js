@@ -1,7 +1,9 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
-    'click .editable': showEdit,
+    'click .editable': 'removeShow',
+    'removeShow': 'insertEdit' //bubble up from subview-- how?
+    //and also how to bring it back = 'click outside-editable'?
   },
 
   className: 'list',
@@ -19,16 +21,26 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var _item = new Asana.Views._Item({ model: item });
       that.addSubview('#list-items', _item.render());
     })
+
+    // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
+  },
+
+  removeShow: function() {
+
+  },
+  insertEdit: function() {
+
   },
 
   showEdit: function(event) {
     //access this subview -- not sure if this is how
+    //use subviews() array
     oldView = $(event.currentTarget);
     debugger
     //create new EditView
-    editView = new Asana.Views._Form({ model = oldView.model });
+    editView = new Asana.Views._Form({ model: oldView.model });
     //remove this subview and append EditView
-    this.removeSubview('#list-items', oldView);
-    this.addSubview('#list-items', editView);
+    // should I be routing here?
+    this.replaceSubview('#list-items', oldView, newView);
   },
 })
