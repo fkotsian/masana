@@ -30,13 +30,13 @@ Asana.Routers.Router = Backbone.Router.extend({
   listShow: function(id, listId) {
     var list = Asana.projects.getOrFetch(id).lists().getOrFetch(listId);
     var newListView = new Asana.Views.ListShow({ model: list })
-    this._currentView.removeSubviews('#list-pane');
-    this._currentView.addSubview('#list-pane', newListView);
+    this.swapPaneView('#list-pane', newListView);
 
     /*on refactor:
         - remove ContainerView
         - move ContainerView's template into Root.html.erb
         - router has 3 base $els: $projectEl, $listEl, $itemEl
+        - route ('') now maps to nothing, or simply rerendering the ProjectPane
         - each $el's view has a collection object that can be referenced
         - each view listensTo its collection object for changes and rerenders
         - on app initialize, create each PaneView and attach subviews as before
@@ -46,8 +46,8 @@ Asana.Routers.Router = Backbone.Router.extend({
 
   swapPaneView: function(paneSelector, newView) {
     this._currentView.removeSubviews(paneSelector);
-    this._currentView.addSubview(newView);
-  }
+    this._currentView.addSubview(paneSelector, newView);
+  },
 
   swapView: function (newView) {
     this._currentView && this._currentView.remove();

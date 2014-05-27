@@ -50,8 +50,9 @@ Backbone.CompositeView = Backbone.View.extend({
   // remove all subviews at selector from array and DOM
   removeSubviews: function (selector) {
     var subviews = this.subviews(selector);
+    var that = this;
     _(subviews).each(function(subview) {
-      this.removeSubview(selector, subview);
+      that.removeSubview(selector, subview);
     });
   },
 
