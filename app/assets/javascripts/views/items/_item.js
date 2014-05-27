@@ -10,7 +10,6 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.assignee-email': 'clear',
     'blur .postable': 'updateItem',
     'submit .postable': 'updateItem',
-
   },
 
   tagName: 'tr',

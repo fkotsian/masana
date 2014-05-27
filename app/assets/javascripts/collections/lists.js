@@ -10,6 +10,6 @@ Asana.Collections.Lists = Backbone.Collection.extend({
   },
 
   url: function() {
-    return 'api/' + this.project.id + '/lists'
+    return 'api/projects/' + this.project.id + '/lists'
   }
 })

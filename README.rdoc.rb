@@ -102,8 +102,9 @@ _ITEMS_DONE: 5/26/14
 
 Phase 2:
 
-- Add new project by pressing "return" on Project view
+# - Add new project by pressing "return" on Project view
 - Add new task by pressing "return" on Task view
+  - this will extend 'submit' event in _Item
 
 - Create section header with ending ':'
 - Clicking on any task pulls up Edit on that header

@@ -2,11 +2,9 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
     'click .editable': 'insertEdit',
-    // 'blur .postable': 'updateList',
-    // 'submit .postable': 'updateList',
-    // 'blur .postable': 'updateItem',
-    // 'removeShow': 'insertEdit' //bubble up from subview-- how?
-    //and also how to bring it back = 'click outside-editable'?
+    'blur h3.postable, p.postable': 'updateList',
+    'submit h3.postable, p.postable': 'updateList',
+    // 'click p.postable': 'clear',
   },
 
   className: 'list',
@@ -25,22 +23,15 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       that.addSubview('#list-items', _item.render());
     })
 
-    // this.listenTo(this.model.items(), 'change', this.render);
-    // might be better served as a listenTo on the subview..
-    // does 'change' give access to the changed item? then I can rerender just that one
-
+    this.listenTo(this.model, 'change', this.render);
 
     // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
   },
 
-  // removeShow: function() {
-  //
-  // },
   insertEdit: function(event) {
     $editable = $(event.target);
-    // input = '<td class="item-title postable">' + $editable.attr('')
     switch ($editable.prop('tagName')) {
-    case 'H*':
+    case 'H3':
       input = '<form><input type="text" value="' + $editable.text() + '" name="list[title]"></input></form>';
       break;
     case 'P':
@@ -48,34 +39,33 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       break;
     default:
       input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
-    }
-    input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
+   }
     $editable.toggleClass('editable');
     $editable.toggleClass('postable');
+
     $editable.html(input);
   },
 
   updateList: function(event) {
-    $form = $(event.target).parent();
-    formData = $form.serializeJSON();
-    this.model.save(formData);
+    event.preventDefault();
+    $postable = $(event.target);
+    // $postable.toggleClass('postable');
+    // $postable.toggleClass('editable');
+
+    formData = $postable.parent().serializeJSON();
+    this.model.save(formData, {
+      success: function(resp) {
+        console.log("Successfully updated .postable list: " + resp.item);
+      debugger
+      },
+      error: function(resp) {
+        console.log("Error in updating .postable: " + resp);
+      }
+    });
   },
 
-  updateItem: function(event) {
-    $form = $(event.target).parent();
-    formData = $form.serializeJSON();
-    this.model.lists().save(formData); //still won't work bc list_id not in formData
+  clear: function(event) {
+    $(event.target).val('');
   },
-  //
-  // showEdit: function(event) {
-  //   //access this subview -- not sure if this is how
-  //   //use subviews() array
-  //   oldView = $(event.currentTarget);
-  //   debugger
-  //   //create new EditView
-  //   editView = new Asana.Views._Form({ model: oldView.model });
-  //   //remove this subview and append EditView
-  //   // should I be routing here?
-  //   this.replaceSubview('#list-items', oldView, newView);
-  // },
+
 })

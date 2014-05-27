@@ -27,6 +27,7 @@ projects = Project.create([
 lists = List.create([
   # 1
   { title: 'Berkshire',
+    description: 'Current market cap: 15.35B',
     project_id: 1
   },
   # 2

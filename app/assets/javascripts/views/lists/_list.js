@@ -22,5 +22,7 @@ Asana.Views._List = Backbone.View.extend({
     return this.model; //?
   },
 
-  initialize: function () {},
+  initialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
 })
