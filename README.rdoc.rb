@@ -84,10 +84,13 @@ BASICS_DONE: 5/26/14
   - on mouseover, outline (titles) (can be CSS: :hover)
   - on click, replace with same classes as have, and current val as val() in form
   - on any keydown, save view.model (and rerender => listen to view.model 'change'
-
-- Login_as_guest
+_ITEMS_DONE: 5/26/14
+- also checkout how to do many subviews
 
 - Pane Popup on click
+
+- Style Devise login/signup views using Bootstrap
+- Login_as_guest
 
 # - Share project with members
 
@@ -108,6 +111,9 @@ Phase 2:
 - Clicking Project in sidebar renders that Project in Project View
 - Clicking Task in Project View renders that Task in Task View
 
+- Add Comments Backbone model and collection
+- Add Comments Backbone View
+- Add Comment seed data
 - Display Comments from all Project Members in Task View
 
 
@@ -125,7 +131,7 @@ Phase 3:
 
 - Style Calendar View
 
-Phase 4:
+Phase 4: Thursday and Friday
 - Tweak, finalize CSS to reflect Asana look/feel
 - Create ~Asana logo (VIPasana? and yoga/hollywood-related tasks?)
 
