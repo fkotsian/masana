@@ -10,4 +10,8 @@ Asana.Views.ItemShow = Backbone.View.extend({
 
     return this;
   },
+
+  initialize: function(options) {
+    this.projectId = options.projectId;
+  }
 })

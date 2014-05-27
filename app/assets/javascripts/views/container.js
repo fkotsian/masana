@@ -1,10 +1,7 @@
 Asana.Views.Container = Backbone.CompositeView.extend({
   template: JST['container'],
 
-  events: {
-    // 'click .renderable-list': 'renderInListPane',
-    // 'click .renderable-item': 'renderInItemPane', //not implemented yet
-  },
+  events: {},
 
   className: 'pane-box row',
   render: function () {
@@ -14,9 +11,6 @@ Asana.Views.Container = Backbone.CompositeView.extend({
     this.attachSubviews();
     return this;
   },
-
-  // renderPanes: function() {
-  // },
 
   initialize: function () {
     var projectsPane = new Asana.Views.ProjectsIndex({ collection: Asana.projects });
@@ -30,7 +24,6 @@ Asana.Views.Container = Backbone.CompositeView.extend({
     this.addSubview('#item-pane', itemPane.render());
 
     //initialize listenTos here
-    // make views listen to click events in the others to make them pop out
   },
 
   renderInProjectPane: function(event) {},

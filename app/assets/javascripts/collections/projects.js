@@ -19,6 +19,18 @@ Asana.Collections.Projects = Backbone.Collection.extend({
     return project;
   },
 
+  findList: function(listId) {
+    for (var i = 0; i < this.models.length; i++) {
+      var project = this.models[i];
+      var lists = project.lists();
+      var list = lists.getOrFetch(listId);
+      if (list) {
+        return list;
+      }
+    };
+
+  },
+
   initialize: function() {},
 });
 

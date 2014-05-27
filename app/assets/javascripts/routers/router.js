@@ -10,7 +10,8 @@ Asana.Routers.Router = Backbone.Router.extend({
     'projects/new': 'projectNew',
     'projects/:id': 'projectShow',
     // 'projects/:id/lists': 'listsIndex',
-    'projects/:id/lists/:list_id': 'listShow',
+    'projects/:project_id/lists/:id': 'listShow',
+    'lists/:list_id/items/:id': 'itemShow',
   },
 
   appContainer: function() {
@@ -27,9 +28,9 @@ Asana.Routers.Router = Backbone.Router.extend({
     });
   },
 
-  listShow: function(id, listId) {
-    var list = Asana.projects.getOrFetch(id).lists().getOrFetch(listId);
-    var newListView = new Asana.Views.ListShow({ model: list })
+  listShow: function(projectId, id) {
+    var list = Asana.projects.getOrFetch(projectId).lists().getOrFetch(id);
+    var newListView = new Asana.Views.ListShow({ model: list });
     this.swapPaneView('#list-pane', newListView);
 
     /*on refactor:
@@ -42,6 +43,14 @@ Asana.Routers.Router = Backbone.Router.extend({
         - on app initialize, create each PaneView and attach subviews as before
         - need 3 different SwapView and _currentView objects in Router
     */
+  },
+
+  itemShow: function(listId, id) {
+    var list = Asana.projects.findList(listId);
+    var item = list.items().getOrFetch(id);
+    var newItemView = new Asana.Views.ItemShow({ model: item,
+                                    projectId: list.get('project_id') });
+    this.swapPaneView('#item-pane', newItemView);
   },
 
   swapPaneView: function(paneSelector, newView) {

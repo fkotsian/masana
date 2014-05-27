@@ -74,10 +74,9 @@ DONE: 5/26/14
 - Assign tasks to members
     - show User''s favicon or initials in 'assign to member slot'
     -- has to pass User to Item... dislike (use jbuilder)
-
+BASICS_DONE: 5/26/14
     (- can remove assignee on click 'X' inside 'Assign Member' popup)
     (- get list of project members on click (event, preventDefault, trigger) )
-BASICS_DONE: 5/26/14
 
 - Editable:
   - ListShow
@@ -85,13 +84,16 @@ BASICS_DONE: 5/26/14
   - on click, replace with same classes as have, and current val as val() in form
   - on any keydown, save view.model (and rerender => listen to view.model 'change'
 _ITEMS_DONE: 5/26/14
-- also checkout how to do many subviews
 
 - List Popup on click
     - click _list sidebar -> notify #project_view to render _list in _list_pane
     - event needs to be on containerView to render in list_pane
+        - used Router
     - _list view template in project needs css class .renderable
     - need list_id or that model or the subview in order to know which to render
+_LIST_DONE: 5/27/14
+(- Style .renderable-list)
+
 - Item Popup on click
 
 - Item .editable
