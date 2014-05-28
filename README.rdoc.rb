@@ -98,6 +98,10 @@ _LIST_DONE: 5/27/14
 _ITEM_DONE: 5/27/14
 (though buggy: attempts to render item on click outside box. fix Blur to fix.)
 
+- responsive layout
+- blur _item .editable box on any movement outside box
+- How do you make it so you can reload views other than '' base view?
+
 - Item .editable
 
 - New List-Item on return or keydown 'down'
@@ -126,9 +130,6 @@ Phase 2:
 
 - Create section header with ending ':'
 - Clicking on any task pulls up Edit on that header
-
-- Clicking Project in sidebar renders that Project in Project View
-- Clicking Task in Project View renders that Task in Task View
 
 - Add Comments Backbone model and collection
 - Add Comments Backbone View

@@ -1,8 +1,11 @@
 Asana.Models.List = Backbone.Model.extend({
+  url: function() {
+    return 'api/lists/' + this.get('id');
+  },
+
   urlHelper: function() {
-    // return 'api/lists/' + this.get('id'); // for API use
     return '#projects/' + this.escape('project_id') +
-           '/lists/' + this.escape('id');       // for template use
+           '/lists/' + this.escape('id');
   },
 
   parse: function (json) {

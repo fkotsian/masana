@@ -1,4 +1,10 @@
 <div class='item-header'>
-  <h3><%= item.escape('title') || '' %></h3>
+  <div class='navbar-right'>
+    <span class='glyphicon glyphicon-remove'>
+  </div>
 </div>
-<p><%= item.escape('description') || 'Select a task to view its details.' %></p>
+<div class='item-body'>
+  <p><%= project.escape('title') %></p>
+  <h3 class='editable'><%= item.escape('title') || '' %></h3>
+  <p class='editable'><%= item.escape('description') || 'Select a task to view its details.' %></p>
+</div>
