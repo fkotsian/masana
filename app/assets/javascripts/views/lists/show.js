@@ -6,6 +6,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'submit h3.postable, p.postable': 'updateList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
+    // 'click .blank-item': 'subEmptyItem',
 
   },
 
@@ -31,7 +32,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var blankItem = items.create({ title: 'Add an Item',
                                      description: 'New description',
                                      list_id: that.model.get('id'), });
-      debugger
       var _blankItem = new Asana.Views._Item({ model: blankItem,
                                           project_id: that.model.get('project_id') });
       that.addSubview('#list-items', _blankItem.render());
