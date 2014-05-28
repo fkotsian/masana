@@ -35,6 +35,7 @@ Asana.Views._Item = Backbone.View.extend({
       },
       error: function(resp) {
         console.log("Error in updating .postable: " + resp);
+        debugger
       }
     });
   },
