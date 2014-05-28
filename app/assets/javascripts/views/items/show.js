@@ -1,5 +1,16 @@
 Asana.Views.ItemShow = Backbone.View.extend({
   template: JST['items/item'],
+
+  initialize: function(options) {
+    this.projectId = options.projectId;
+    this.project = Asana.projects.get(this.projectId);
+    if (!this.project) {
+      this.project = new Asana.Models.Project();
+    }
+
+    this.listenTo(this.model, 'sync change', this.render);
+  },
+
   events: {
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateItem',
@@ -21,11 +32,8 @@ Asana.Views.ItemShow = Backbone.View.extend({
   insertEdit: function(event) {
     $editable = $(event.target);
     switch ($editable.prop('tagName')) {
-    case 'H3':
-      input = '<form><input type="text" value="' + $editable.text() + '" name="list[title]"></input></form>';
-      break;
     case 'P':
-      input = '<form><input type="text" value="' + $editable.text() + '" name="list[description]"></input></form>';
+      input = '<form><input type="text" value="' + $editable.text() + '" name="item[description]"></input></form>';
       break;
     default:
       input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
@@ -37,16 +45,23 @@ Asana.Views.ItemShow = Backbone.View.extend({
   },
 
   updateItem: function(event) {
+    event.preventDefault();
+    $postable = $(event.target);
+    // $postable.toggleClass('postable');
+    // $postable.toggleClass('editable');
 
+    formData = $postable.parent().serializeJSON();
+    this.model.save(formData, {
+      success: function(resp) {
+        console.log("Successfully updated .postable list: " + resp.attributes);
+      },
+      error: function(resp) {
+        console.log("Error in updating .postable: " + resp);
+      }
+    });
   },
 
   closePane: function(event) {},
 
-  initialize: function(options) {
-    this.projectId = options.projectId;
-    this.project = Asana.projects.get(this.projectId);
-    if (!this.project) {
-      this.project = new Asana.Models.Project();
-    }
-  }
+
 })
