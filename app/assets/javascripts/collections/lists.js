@@ -1,7 +1,7 @@
 Asana.Collections.Lists = Backbone.Collection.extend({
   model: Asana.Models.List,
   url: function() {
-    return 'api/projects/' + this.project.id + '/lists';
+    return 'api/projects/' + this.project.escape('id') + '/lists';
   },
   comparator: function (list) {
     return list.get('created_at');

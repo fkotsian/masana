@@ -20,13 +20,24 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
   initialize: function () {
     var that = this;
-    this.model.items().each(function (item) {
-      var _item = new Asana.Views._Item({ model: item ,
-                    project_id: that.model.get('project_id') });
-      that.addSubview('#list-items', _item.render());
-    })
+    var items = this.model.items();
+    if (items.length > 0) {
+      items.each(function (item) {
+        var _item = new Asana.Views._Item({ model: item,
+                                            project_id: that.model.get('project_id') });
+        that.addSubview('#list-items', _item.render());
+      })
+    } else {
+      var blankItem = items.create({ title: 'Add an Item',
+                                     description: 'New description',
+                                     list_id: that.model.get('id'), });
+      // debugger
+      var _blankItem = new Asana.Views._Item({ model: blankItem,
+                                          project_id: that.model.get('project_id') });
+      that.addSubview('#list-items', _blankItem.render());
+    }
 
-    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'sync change', this.render);
 
     // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
   },
@@ -47,6 +58,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     $editable.toggleClass('postable');
 
     $editable.html(input);
+    $editable.find('input').focus()
   },
 
   updateList: function(event) {
@@ -58,7 +70,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     formData = $postable.parent().serializeJSON();
     this.model.save(formData, {
       success: function(resp) {
-        console.log("Successfully updated .postable list: " + resp.item);
+        console.log("Successfully updated .postable list: " + resp.attributes);
       },
       error: function(resp) {
         console.log("Error in updating .postable: " + resp);

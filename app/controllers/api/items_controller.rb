@@ -13,6 +13,13 @@ module Api
 
     def create
       @item = Item.new(item_params)
+
+      if !@item.rank
+        item_list = List.find(@item.list_id)
+        max_rank = item_list.items.maximum(:rank) || 0
+        @item.rank = max_rank + 1
+      end
+
       if @item.save
         render partial: 'api/items/item', locals: { item: @item }
       else

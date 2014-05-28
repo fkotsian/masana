@@ -4,6 +4,7 @@ Asana.Views.Container = Backbone.CompositeView.extend({
   events: {},
 
   className: 'pane-box row',
+
   render: function () {
     var renderedContent = this.template();
     this.$el.html(renderedContent);
@@ -13,17 +14,30 @@ Asana.Views.Container = Backbone.CompositeView.extend({
   },
 
   initialize: function () {
-    var projectsPane = new Asana.Views.ProjectsIndex({ collection: Asana.projects });
-    var defaultList = Asana.projects.first().lists().first();
-    var listPane = new Asana.Views.ListShow({ model: defaultList });  // this should be all owned_tasks eventually, but for now it's just lists.first()
-    var defaultItem = new Asana.Models.Item();
-    var itemPane = new Asana.Views.ItemShow({ model: defaultItem }); // this should default to be a new_item
+    this.setupPage();
+  },
 
+  setupPage: function() {
+    alert('setting up page')
+    var projectsPane = new Asana.Views.ProjectsIndex({
+      collection: this.collection
+    });
+
+    var defaultList = this.collection.first().lists().first();
+    var listPane = new Asana.Views.ListShow({
+      model: defaultList
+    });  // this should be all owned_tasks eventually, but for now it's just lists.first()
+    var defaultItem = new Asana.Models.Item();
+    var itemPane = new Asana.Views.ItemShow({
+      model: defaultItem
+     });
+
+    this.removeSubviews('#projects-pane');
+    this.removeSubviews('#list-pane');
+    this.removeSubviews('#item-pane');
     this.addSubview('#projects-pane', projectsPane.render());
     this.addSubview('#list-pane', listPane.render());
     this.addSubview('#item-pane', itemPane.render());
-
-    //initialize listenTos here
   },
 
   renderInProjectPane: function(event) {},

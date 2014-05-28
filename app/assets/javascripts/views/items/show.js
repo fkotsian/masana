@@ -9,6 +9,7 @@ Asana.Views.ItemShow = Backbone.View.extend({
     }
 
     this.listenTo(this.model, 'sync change', this.render);
+    // this.listenTo(this.model.list, 'sync', this.render)
   },
 
   events: {
@@ -19,9 +20,13 @@ Asana.Views.ItemShow = Backbone.View.extend({
   },
 
   className: 'item-show',
+
   render: function () {
-    var renderedContent = this.template({ item: this.model,
-                                          project: this.project });
+    // alert('rendering item show')
+    var renderedContent = this.template({
+      item: this.model,
+      project: this.project
+    });
     this.$el.html(renderedContent);
 
     // attach comments as a subview; if this.model then attach

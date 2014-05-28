@@ -1,7 +1,10 @@
 Asana.Collections.Items = Backbone.Collection.extend({
   model: Asana.Models.Item,
+  initialize: function(models, options) {
+    this.list = options.list;
+  },
   url: function() {
-    'api/lists/' + this.list.id + '/items';
+    return 'api/lists/' + this.list.escape('id') + '/items';
   },
   comparator: function (item) {
     return item.get('created_at');
@@ -21,8 +24,6 @@ Asana.Collections.Items = Backbone.Collection.extend({
     return item;
   },
 
-  initialize: function(models, options) {
-    this.list = options.list;
-  },
+
 
 })

@@ -103,6 +103,7 @@ _ITEM_DONE: 5/27/14
 - How do you make it so you can reload views other than '' base view?
 
 - Item .editable
+_DONE: 5/28/14
 
 - New List-Item on return or keydown 'down'
 

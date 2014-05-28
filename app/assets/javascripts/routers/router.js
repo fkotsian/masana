@@ -2,10 +2,11 @@ Asana.Routers.Router = Backbone.Router.extend({
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
     // perhaps use a $projectEl, $listEl, and $itemEl (in same vein as NewsReader sidebar)
+    // this.appContainer();
   },
 
   routes: {
-    '': 'appContainer',
+    '': 'dashboard',
     // 'projects/index': 'projectsIndex',
     'projects/new': 'projectNew',
     'projects/:id': 'projectShow',
@@ -14,24 +15,41 @@ Asana.Routers.Router = Backbone.Router.extend({
     'lists/:list_id/items/:id': 'itemShow',
   },
 
-  appContainer: function() {
-    var that = this;
-    Asana.projects.fetch({
-      success: function (resp) {
-        console.log("Successfully fetched Projects in Container: " + resp);
-        var appContainer = new Asana.Views.Container();
-        that.swapView(appContainer);
-      },
-      error: function (resp) {
-        console.log("Error: " + resp);
-      }
-    });
+  renderAppContainer: function(callback) {
+    // our base collection = Asana.projects
+    if(!this._appContainer) {
+      this._appContainer = new Asana.Views.Container({
+        collection: Asana.projects
+      });
+      this.swapView(this._appContainer);
+    }
+
+    // Asana.projects.fetch({
+    //       success: function() {
+        callback();
+    //   }
+    // });
+  },
+
+  projectShow: function(id) {
+    // getOrFetch our project from projects collection
+
+
+  },
+
+  dashboard: function() {
+    this.renderAppContainer();
   },
 
   listShow: function(projectId, id) {
-    var list = Asana.projects.getOrFetch(projectId).lists().getOrFetch(id);
-    var newListView = new Asana.Views.ListShow({ model: list });
-    this.swapPaneView('#list-pane', newListView);
+    var that = this;
+    this.renderAppContainer(function() {
+      var list = Asana.projects.getOrFetch(projectId).lists().getOrFetch(id);
+      var newListView = new Asana.Views.ListShow({
+        model: list
+      });
+      that.swapPaneView('#list-pane', newListView);
+    })
 
     /*on refactor:
         - remove ContainerView
@@ -46,12 +64,19 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   itemShow: function(listId, id) {
-    console.log('in itemsShow')
-    var list = Asana.projects.findList(listId);
-    var item = list.items().getOrFetch(id);
-    var newItemView = new Asana.Views.ItemShow({ model: item,
-                                    projectId: list.get('project_id') });
-    this.swapPaneView('#item-pane', newItemView);
+    var that = this;
+    this.renderAppContainer(function() {
+      console.log('in itemsShow')
+      var list = Asana.projects.findList(listId);
+      var item = list.items().getOrFetch(id);
+      // debugger
+      var newItemView = new Asana.Views.ItemShow({
+        model: item,
+        projectId: list.get('project_id')
+      });
+      that.swapPaneView('#item-pane', newItemView);
+    })
+
   },
 
   swapPaneView: function(paneSelector, newView) {
