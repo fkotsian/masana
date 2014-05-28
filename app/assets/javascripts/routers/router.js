@@ -2,7 +2,7 @@ Asana.Routers.Router = Backbone.Router.extend({
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
     // perhaps use a $projectEl, $listEl, and $itemEl (in same vein as NewsReader sidebar)
-    // this.appContainer();
+    this.renderAppContainer();
   },
 
   routes: {
@@ -15,7 +15,7 @@ Asana.Routers.Router = Backbone.Router.extend({
     'lists/:list_id/items/:id': 'itemShow',
   },
 
-  renderAppContainer: function(callback) {
+  renderAppContainer: function() {
     // our base collection = Asana.projects
     if(!this._appContainer) {
       this._appContainer = new Asana.Views.Container({
@@ -23,33 +23,20 @@ Asana.Routers.Router = Backbone.Router.extend({
       });
       this.swapView(this._appContainer);
     }
-
-    // Asana.projects.fetch({
-    //       success: function() {
-        callback();
-    //   }
-    // });
   },
 
-  projectShow: function(id) {
-    // getOrFetch our project from projects collection
-
-
-  },
+  projectShow: function(id) {},
 
   dashboard: function() {
-    this.renderAppContainer();
+    // maintain rendered AppContainer view
   },
 
   listShow: function(projectId, id) {
-    var that = this;
-    this.renderAppContainer(function() {
-      var list = Asana.projects.getOrFetch(projectId).lists().getOrFetch(id);
-      var newListView = new Asana.Views.ListShow({
-        model: list
-      });
-      that.swapPaneView('#list-pane', newListView);
-    })
+    var list = Asana.projects.getOrFetch(projectId).lists().getOrFetch(id);
+    var newListView = new Asana.Views.ListShow({
+      model: list
+    });
+    this.swapPaneView('#list-pane', newListView);
 
     /*on refactor:
         - remove ContainerView
@@ -64,19 +51,14 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   itemShow: function(listId, id) {
-    var that = this;
-    this.renderAppContainer(function() {
-      console.log('in itemsShow')
-      var list = Asana.projects.findList(listId);
-      var item = list.items().getOrFetch(id);
-      // debugger
-      var newItemView = new Asana.Views.ItemShow({
-        model: item,
-        projectId: list.get('project_id')
-      });
-      that.swapPaneView('#item-pane', newItemView);
-    })
-
+    console.log('in itemsShow');
+    var list = Asana.projects.findList(listId);
+    var item = list.items().getOrFetch(id);
+    var newItemView = new Asana.Views.ItemShow({
+      model: item,
+      projectId: list.get('project_id')
+    });
+    this.swapPaneView('#item-pane', newItemView);
   },
 
   swapPaneView: function(paneSelector, newView) {

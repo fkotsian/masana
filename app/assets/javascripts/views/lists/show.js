@@ -37,7 +37,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       that.addSubview('#list-items', _blankItem.render());
     }
 
-    this.listenTo(this.model, 'sync change', this.render);
+    this.listenTo(this.model, 'sync change:title change:description', this.render);
 
     // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
   },

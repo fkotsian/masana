@@ -18,7 +18,6 @@ Asana.Views.Container = Backbone.CompositeView.extend({
   },
 
   setupPage: function() {
-    alert('setting up page')
     var projectsPane = new Asana.Views.ProjectsIndex({
       collection: this.collection
     });

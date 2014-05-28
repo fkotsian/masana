@@ -4,7 +4,7 @@ Asana.Views._Item = Backbone.View.extend({
   initialize: function(options) {
     this.project_id = options.project_id;
 
-    this.listenTo(this.model, 'sync change', this.render);
+    this.listenTo(this.model, 'sync change:title', this.render);
   },
 
   events: {
