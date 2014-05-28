@@ -1,4 +1,4 @@
 <div class='item-header'>
-  <h3><%= item.escape('title') || 'Nothing Selected' %></h3>
+  <h3><%= item.escape('title') || '' %></h3>
 </div>
-<p>Select a task to view its details.</p>
+<p><%= item.escape('description') || 'Select a task to view its details.' %></p>

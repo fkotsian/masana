@@ -6,7 +6,7 @@ Asana.Routers.Router = Backbone.Router.extend({
 
   routes: {
     '': 'appContainer',
-    'projects/index': 'projectsIndex',
+    // 'projects/index': 'projectsIndex',
     'projects/new': 'projectNew',
     'projects/:id': 'projectShow',
     // 'projects/:id/lists': 'listsIndex',
@@ -46,6 +46,7 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   itemShow: function(listId, id) {
+    console.log('in itemsShow')
     var list = Asana.projects.findList(listId);
     var item = list.items().getOrFetch(id);
     var newItemView = new Asana.Views.ItemShow({ model: item,

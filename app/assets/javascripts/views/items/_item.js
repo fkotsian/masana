@@ -15,7 +15,7 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   tagName: 'tr',
-  className: 'list-item',
+  className: 'list-item renderable-item',
   render: function () {
     var renderedContent = this.template({ item: this.model });
     this.$el.html(renderedContent);

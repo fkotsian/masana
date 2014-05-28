@@ -5,6 +5,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
     // 'click p.postable': 'clear',
+    'click .renderable-item': 'renderInItemPane',
+
   },
 
   className: 'list',
@@ -63,6 +65,21 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       }
     });
   },
+
+  renderInItemPane: function(event) {
+    $renderable = $(event.target.parentElement);
+    itemId = $renderable.find('.item-assignee-btn').attr('data-id');
+    if (itemId) {
+      var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
+      Backbone.history.navigate(url, { trigger: true });
+    }
+    // 'items/undefined' bug occurs because we are clicking outside itemPane...
+    // question is, why does it allow us to click out there?
+    // it's because the box stays blurred. Conclusion:
+    // need to blur as soon as leave box -- is there a callback for that?
+
+  },
+
 
   clear: function(event) {
     $(event.target).val('');

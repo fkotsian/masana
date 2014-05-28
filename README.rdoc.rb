@@ -95,6 +95,8 @@ _LIST_DONE: 5/27/14
 (- Style .renderable-list)
 
 - Item Popup on click
+_ITEM_DONE: 5/27/14
+(though buggy: attempts to render item on click outside box. fix Blur to fix.)
 
 - Item .editable
 
