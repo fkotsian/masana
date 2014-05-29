@@ -27,6 +27,12 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   handleNewItem: function(item){
     console.log('rendering due to new item')
     this.render();
+    var newRow = $(this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]')[0]);
+    setTimeout(function(){
+      newRow.find('.editable').click();
+    }, 1000);
+
+    console.log('clicking it')
   },
 
   events: {

@@ -25,11 +25,13 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   handleInputBlur: function(event){
+    console.log('blur from ' + this.model.get('title'));
     var $postable = $(event.target.parentElement);
     this.updateItem($postable);
   },
 
   handleSubmit: function(event){
+    console.log('submit from ' + this.model.get('title'));
     event.preventDefault();
     var $form = $(event.target);
     this.updateItem($form);
@@ -39,7 +41,7 @@ Asana.Views._Item = Backbone.View.extend({
     var formData = $form.serializeJSON().item;
     this.model.save(formData, {
       success: function(resp) {
-        console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
+        console.log("Successfully updated .postable; title: " + resp.attributes.title);
       },
       error: function(resp) {
         console.log("Error in updating .postable; rank: " + resp.attributes.rank);
