@@ -24,12 +24,11 @@ Asana.Views._Item = Backbone.View.extend({
 
   updateItem: function(event) {
     event.preventDefault();
-    $postable = $(event.target);
+    var $postable = $(event.target);
     // $postable.toggleClass('postable');
     // $postable.toggleClass('editable'); // don't need it bc are rerendering
 
-    formData = $postable.parent().serializeJSON();
-    // debugger
+    var formData = $postable.parent().serializeJSON().item;
     this.model.save(formData, {
       success: function(resp) {
         console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
@@ -44,8 +43,8 @@ Asana.Views._Item = Backbone.View.extend({
   assignToUser: function(event) {
     event.preventDefault();
 
-    $form = $(event.target).parent();
-    newAssigneeEmail = $form.serializeJSON().new_assignee_email;
+    var $form = $(event.target).parent();
+    var newAssigneeEmail = $form.serializeJSON().new_assignee_email;
     this.model.save({ 'newAssigneeEmail': newAssigneeEmail },{
       success: function(resp) {
         console.log("Successfully saved assignment: " + resp);

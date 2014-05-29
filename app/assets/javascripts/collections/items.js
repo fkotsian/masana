@@ -22,6 +22,14 @@ Asana.Collections.Items = Backbone.Collection.extend({
     return item;
   },
 
-
+  bumpRanks: function(targetRank) {
+    this.models.each(function(item) {
+      var thisRank = item.get('rank');
+      if (thisRank > targetRank) {
+        item.set('rank', parseInt(thisRank) + 1);
+        item.save({});
+      }
+    })
+  },
 
 })

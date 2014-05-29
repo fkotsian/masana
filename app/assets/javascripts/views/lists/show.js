@@ -1,5 +1,25 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
+  initialize: function () {
+    var that = this;
+    var items = this.collection = this.model.items();
+
+    if (items.length > 0) {
+      items.each(function (item) {
+        that.addItemView(item);
+      });
+    } else {
+      var blankItem = items.create({
+        title: 'Add an Item',
+        description: 'New description',
+        list_id: that.model.get('id'),
+      });
+      this.addItemView(blankItem);
+    }
+
+    this.listenTo(this.model, 'sync change:title change:description', this.render);
+    this.listenTo(items, 'sort add', function() {console.log('sort callback' + this); });
+  },
   events: {
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
@@ -13,6 +33,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
   className: 'list',
   render: function () {
+    console.log('rendering list')
     var renderedContent = this.template({ list: this.model });
     this.$el.html(renderedContent);
     this.attachSubviews();
@@ -20,29 +41,14 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     return this;
   },
 
-  initialize: function () {
-    var that = this;
-    var items = this.collection = this.model.items();
 
-    if (items.length > 0) {
-      items.each(function (item) {
-        var _item = new Asana.Views._Item({ model: item,
-                                            project_id: that.model.get('project_id') });
-        that.addSubview('#list-items', _item.render());
-      })
-    } else {
-      var blankItem = items.create({ title: 'Add an Item',
-                                     description: 'New description',
-                                     list_id: that.model.get('id'), });
-     //refactor: can make a blankItem view extending subview --
-     //add the class and the listener to clear on first click
-      var _blankItem = new Asana.Views._Item({ model: blankItem,
-                                          project_id: that.model.get('project_id') });
-      that.addSubview('#list-items', _blankItem.render());
-    }
 
-    this.listenTo(this.model, 'sync change:title change:description', this.render);
-    this.listenTo(items, 'sort', function() {console.log('sort callback' + this); });
+  addItemView: function(item){
+    var _item = new Asana.Views._Item({
+      model: item,
+      project_id: this.model.get('project_id')
+    });
+    this.addSubview('#list-items', _item.render());
   },
 
   insertEdit: function(event) {
@@ -56,98 +62,81 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       break;
     default:
       input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
-   }
+    }
     $editable.toggleClass('editable');
     $editable.toggleClass('postable');
 
     $editable.html(input);
-    // debugger
-    ///*** FOR SOME REASON THIS DOES NOT KEEP FOCUS WHEN TRIGGERED BY .click() !
+
     $editable.find('input').focus()
   },
 
   updateList: function(event) {
     event.preventDefault();
-    $postable = $(event.target);
-    // $postable.toggleClass('postable');
-    // $postable.toggleClass('editable');
+    var $postable = $(event.target);
 
-    formData = $postable.parent().serializeJSON();
-    this.model.save(formData, {
+    var formData = $postable.parent().serializeJSON();
+    this.model.save(formData.list, {
       success: function(resp) {
-        console.log("Successfully updated .postable list: " + resp.attributes);
+        // console.log("Successfully updated .postable list: " + resp.attributes);
       },
       error: function(resp) {
-        console.log("Error in updating .postable list: " + resp);
+        // console.log("Error in updating .postable list: " + resp);
       }
     });
   },
 
-  attachNewList: function(event) {
-    event.preventDefault();
-
-    console.log('attaching new item k')
-    var targetRank = $(event.target.parentElement.parentElement)
-        .find('.item-drag-hook').text();
-    targetRank = parseInt(targetRank);
-
+  incrementItems: function(threshold){
     var items = this.model.items();
     items.each(function(item) {
       var thisRank = item.get('rank');
-      if (thisRank > targetRank) {
-        item.set('rank', parseInt(thisRank) + 1);
-        item.save({});
+      console.log(item.get('title') + "'s old rank: " + thisRank);
+      if (thisRank > threshold) {
+        var newRank = parseInt(thisRank) + 1;
+        console.log('updating ' + item.get('title') + " to " + newRank);
+        // item.set('rank', newRank);
+        item.save({rank: newRank}, {
+          success: function(updatedItem){
+            var newRank = updatedItem.get('rank');
+            var data = updatedItem.get('title');
+            console.log(data + "'s new rank: " + newRank);
+          },
+          error: function(resp){
+            console.log("ERRORR!@@@@!!!")
+          }
+        });
       }
     })
+  },
 
+  attachNewList: function(event) {
+    event.preventDefault();
+    var $row = $(event.target.parentElement.parentElement);
+    var targetRank = parseInt($row.find('.item-drag-hook').text());
+    this.incrementItems(targetRank);
     var that = this;
+    var items = this.model.items();
     //can refactor this into an Items collection factory method
     var blankItem = items.create({
-                                    title: '',
-                                    description: 'New description',
-                                    list_id: this.model.get('id'),
-                                    rank: targetRank + 1,
-                                }, {
-                                    wait: true,
-
-//actually should write a subview-sort method using $(selector).index(subview.$el);
-                                    success: function() {console.log('creating item'); },
-                                   }
-                                );
-    var _blankItem = new Asana.Views._Item({
-                                        model: blankItem,
-                                        project_id: this.model.get('project_id'),
-                                          });
-    var renderedBlank = _blankItem.render();
-    this.addSubview('#list-items', renderedBlank);
-    // this issue is that the collection is sorted, but the subview is appended to the end of the subviews array.
-    // We need to sort the subviews, or clear and reattach them in collection order.
-    // debugger
-    // click the newly DOM-added element
-    // debugger
-    renderedBlank.$el.find('.editable').click();
-
-    //now focus it and trigger click events on this new subview (ie move the cursor down there)
+      title: '',
+      description: 'New description',
+      list_id: this.model.get('id'),
+      rank: targetRank + 1,
+    },  {
+      wait: true,
+      success: function() {},
+    });
+    this.addItemView(blankItem);
   },
 
   renderInItemPane: function(event) {
-    $renderable = $(event.target.parentElement);
-    itemId = $renderable.find('.item-assignee-btn').attr('data-id');
+    var $renderable = $(event.target.parentElement);
+    var itemId = $renderable.find('.item-assignee-btn').attr('data-id');
     if (itemId) {
       var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
       Backbone.history.navigate(url, { trigger: true });
     }
   },
-
-  // compareBy: function(subviewA, subviewB) {
-  //   var result = subviewA.model.get('rank') - subviewB.model.get('rank');
-  //   if (result === 0) {
-  //     return -1;
-  //   } else {
-  //     return result;
-  //   }
-  // },
-
   clear: function(event) {
     $(event.target).val('');
   },
