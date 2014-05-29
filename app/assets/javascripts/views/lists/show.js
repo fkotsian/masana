@@ -4,6 +4,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
+    'submit td.postable': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
     // 'click .blank-item': 'subEmptyItem',
@@ -22,6 +23,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   initialize: function () {
     var that = this;
     var items = this.model.items();
+
     if (items.length > 0) {
       items.each(function (item) {
         var _item = new Asana.Views._Item({ model: item,
@@ -32,12 +34,15 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var blankItem = items.create({ title: 'Add an Item',
                                      description: 'New description',
                                      list_id: that.model.get('id'), });
+     debugger
+     //refactor: can make a blankItem view extending subview --
+     //add the class and the listener to clear on first click
       var _blankItem = new Asana.Views._Item({ model: blankItem,
                                           project_id: that.model.get('project_id') });
       that.addSubview('#list-items', _blankItem.render());
     }
 
-    this.listenTo(this.model, 'sync change:title change:description', this.render);
+    this.listenTo(this.model, 'sync change', this.render);
 
     // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
   },
@@ -78,6 +83,42 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     });
   },
 
+  attachNewList: function(event) {
+    event.preventDefault();
+
+    console.log('attaching new item k')
+    var targetRank = $(event.target.parentElement.parentElement)
+        .find('.item-drag-hook').text();
+    targetRank = parseInt(targetRank);
+
+    var items = this.model.items();
+    items.each(function(item) {
+      var thisRank = item.get('rank');
+      if (thisRank > targetRank) {
+        item.set('rank', parseInt(thisRank) + 1);
+        item.save({});
+      }
+    })
+    //can refactor this into an Items collection factory method
+    var blankItem = items.create({
+                                    title: '',
+                                    description: 'New description',
+                                    list_id: this.model.get('id'),
+                                    rank: targetRank + 1,
+                                },{
+                                  wait: true,
+                                  success: function(resp) {console.log('goddammit it saved!')},
+                                  error: function(resp) {console.log('no savey new')},
+                                });
+    var _blankItem = new Asana.Views._Item({
+                                        model: blankItem,
+                                        project_id: this.model.get('project_id'),
+                                          });
+    this.addSubview('#list-items', _blankItem.render());
+
+    //now focus it and trigger click events on this new subview (ie move the cursor down there)
+  },
+
   renderInItemPane: function(event) {
     $renderable = $(event.target.parentElement);
     itemId = $renderable.find('.item-assignee-btn').attr('data-id');
@@ -85,11 +126,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
       Backbone.history.navigate(url, { trigger: true });
     }
-    // 'items/undefined' bug occurs because we are clicking outside itemPane...
-    // question is, why does it allow us to click out there?
-    // it's because the box stays blurred. Conclusion:
-    // need to blur as soon as leave box -- is there a callback for that?
-
   },
 
 

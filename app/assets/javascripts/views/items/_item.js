@@ -11,7 +11,7 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.submit-assignment-btn': 'assignToUser',
     'click input.assignee-email': 'clear',
     'blur .postable': 'updateItem',
-    'submit .postable': 'updateItem',
+    'submit .postable': 'updateItemAndAttachNew',
   },
 
   tagName: 'tr',
@@ -29,12 +29,13 @@ Asana.Views._Item = Backbone.View.extend({
     // $postable.toggleClass('editable'); // don't need it bc are rerendering
 
     formData = $postable.parent().serializeJSON();
+    // debugger
     this.model.save(formData, {
       success: function(resp) {
-        console.log("Successfully updated .postable");
+        console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
       },
       error: function(resp) {
-        console.log("Error in updating .postable: " + resp);
+        console.log("Error in updating .postable; rank: " + resp.attributes.rank);
         debugger
       }
     });
@@ -51,7 +52,7 @@ Asana.Views._Item = Backbone.View.extend({
       },
       error: function(resp) {
         console.log("Error in assigning task: " + resp);
-        debugger
+        // debugger
       }
     });
     // possibly trigger collection to re-render (need listener on collection)

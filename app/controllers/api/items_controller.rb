@@ -14,10 +14,16 @@ module Api
     def create
       @item = Item.new(item_params)
 
+      # sibling_items = List.find(params[:list_id]).items
       if !@item.rank
-        item_list = List.find(@item.list_id)
-        max_rank = item_list.items.maximum(:rank) || 0
-        @item.rank = max_rank + 1
+        # max_rank = sibling_items.maximum(:rank) || 0
+        # @item.rank = max_rank + 1
+        @item.rank = 1
+      end
+
+      overlapping_rank_items = Item.where('list_id = ? AND rank >= ?', [ params[:list_id], @item.rank ])
+      overlapping_rank_items.each do |item|
+        item.update_attributes({ rank: item.rank + 1 })
       end
 
       if @item.save
@@ -50,7 +56,7 @@ module Api
 
     private
     def item_params
-      params.require(:item).permit(:title, :description, :due_date, :completed, :rank, :list_id, :user_id)
+      params.require(:item).permit(:id, :title, :description, :due_date, :completed, :rank, :list_id, :user_id)
     end
   end
 end
