@@ -7,7 +7,7 @@ Asana.Collections.Items = Backbone.Collection.extend({
     return 'api/lists/' + this.list.escape('id') + '/items';
   },
   comparator: function (item) {
-    return item.get('created_at');
+    return item.get('rank');
   },
 
   getOrFetch: function(id) {
