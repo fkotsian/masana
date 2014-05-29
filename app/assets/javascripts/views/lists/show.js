@@ -128,6 +128,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       list_id: this.model.get('id'),
       rank: targetRank + 1,
     },  {
+      wait: true,
       success: function() {},
     });
     this.addItemView(blankItem);
