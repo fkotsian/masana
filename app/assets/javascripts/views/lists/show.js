@@ -6,8 +6,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     view = this;
 
     if (items.length > 0) {
-      items.each(function (item) {
-        that.addItemView(item);
+      items.each(function (item, index) {
+        that.addItemView(item, index);
       });
     } else {
       var blankItem = items.create({
@@ -19,9 +19,22 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     }
 
     this.listenTo(this.model, 'sync change:title change:description', this.render);
+    this.listenTo(this.collection, "addNewItem", this.handleNewItem);
 
-    this.listenTo(items, 'sort', this.render);
+    // this.listenTo(items, 'sort', this.render);
   },
+
+  handleNewItem: function(item){
+    console.log('rendering due to new item')
+    this.render();
+    //this seems to cause extra items to be added
+    // //focus the input of the newly added item
+    // var newItemRow = this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]');
+    // newItemRow.find('.editable').click();
+    // // debugger
+    // newItemRow.find('.postable input').focus();
+  },
+
   events: {
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
@@ -35,22 +48,12 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
   className: 'list',
   render: function () {
-    console.log('rendering list')
+    console.log('rendering')
     var renderedContent = this.template({ list: this.model });
     this.$el.html(renderedContent);
     this.attachSubviews();
 
     return this;
-  },
-
-
-
-  addItemView: function(item){
-    var _item = new Asana.Views._Item({
-      model: item,
-      project_id: this.model.get('project_id')
-    });
-    this.addSubview('#list-items', _item.render());
   },
 
   insertEdit: function(event) {
@@ -111,15 +114,16 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
         });
       }
     })
-    items.sort();
   },
 
   attachNewList: function(event) {
+    console.log('creating new blank item')
+
     event.preventDefault();
     var $row = $(event.target.parentElement.parentElement);
     var targetRank = parseInt($row.find('.item-drag-hook').text());
     this.incrementItems(targetRank);
-    var that = this;
+
     var items = this.model.items();
     //can refactor this into an Items collection factory method
     var blankItem = items.create({
@@ -131,7 +135,21 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       wait: true,
       success: function() {},
     });
-    this.addItemView(blankItem);
+    // how does it attach this before the item saves are done?
+    this.addItemView(blankItem, targetRank);
+    this.collection.trigger('addNewItem', blankItem);
+  },
+
+
+  addItemView: function(item, index){
+    //index will be new location in list
+    //if an item is already there, it will be moved up
+    var _item = new Asana.Views._Item({
+      model: item,
+      project_id: this.model.get('project_id')
+    });
+    var renderedItem = _item.render();
+    this.addSubview('#list-items', renderedItem, index);
   },
 
   renderInItemPane: function(event) {

@@ -16,6 +16,7 @@ Asana.Views._Item = Backbone.View.extend({
 
   tagName: 'tr',
   className: 'list-item renderable-item',
+  attributes: function(){return{'data-item-rank': this.model.get('rank')}},
   render: function () {
     var renderedContent = this.template({ item: this.model });
     this.$el.html(renderedContent);
@@ -31,10 +32,10 @@ Asana.Views._Item = Backbone.View.extend({
     var formData = $postable.parent().serializeJSON().item;
     this.model.save(formData, {
       success: function(resp) {
-        console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
+        // console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
       },
       error: function(resp) {
-        console.log("Error in updating .postable; rank: " + resp.attributes.rank);
+        // console.log("Error in updating .postable; rank: " + resp.attributes.rank);
         debugger
       }
     });

@@ -17,15 +17,27 @@ window.Asana = {
 };
 
 Backbone.CompositeView = Backbone.View.extend({
-  addSubview: function (selector, subview) {
-    this.subviews(selector).push(subview);
-    this.attachSubview(selector, subview.render());
+  addSubview: function (selector, subview, index) {
+    if(index){
+      this.subviews(selector).splice(index, 0, subview);
+      // this.attachSubviewAtIndex(selector, subview.render(), index);
+    } else {
+      this.subviews(selector).push(subview);
+    }
+      this.attachSubview(selector, subview.render());
   },
 
   attachSubview: function (selector, subview) {
     this.$(selector).append(subview.$el);
     subview.delegateEvents();
   },
+
+  attachSubviewAtIndex: function (selector, subview, index) {
+    this.$(selector + " tr:nth-child(index)").before(subview.$el);
+    // this.$(selector).append(subview.$el);
+    subview.delegateEvents();
+  },
+
 
   attachSubviews: function () {
     var view = this;
