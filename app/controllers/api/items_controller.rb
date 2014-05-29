@@ -14,17 +14,17 @@ module Api
     def create
       @item = Item.new(item_params)
 
-      # sibling_items = List.find(params[:list_id]).items
+      sibling_items = List.find(params[:list_id]).items
       if !@item.rank
-        # max_rank = sibling_items.maximum(:rank) || 0
-        # @item.rank = max_rank + 1
-        @item.rank = 1
+        max_rank = sibling_items.maximum(:rank) || 0
+        @item.rank = max_rank + 1
+        # @item.rank = 1
       end
 
-      overlapping_rank_items = Item.where('list_id = ? AND rank >= ?', params[:list_id], @item.rank )
-      overlapping_rank_items.each do |item|
-        item.update_attributes({ rank: item.rank + 1 })
-      end
+      # overlapping_rank_items = Item.where('list_id = ? AND rank >= ?', params[:list_id], @item.rank )
+      # overlapping_rank_items.each do |item|
+      #   item.update_attributes({ rank: item.rank + 1 })
+      # end
 
       if @item.save
         render partial: 'api/items/item', locals: { item: @item }

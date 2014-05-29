@@ -22,7 +22,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
   initialize: function () {
     var that = this;
-    var items = this.model.items();
+    var items = this.collection = this.model.items();
 
     if (items.length > 0) {
       items.each(function (item) {
@@ -34,7 +34,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var blankItem = items.create({ title: 'Add an Item',
                                      description: 'New description',
                                      list_id: that.model.get('id'), });
-     debugger
      //refactor: can make a blankItem view extending subview --
      //add the class and the listener to clear on first click
       var _blankItem = new Asana.Views._Item({ model: blankItem,
@@ -42,10 +41,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       that.addSubview('#list-items', _blankItem.render());
     }
 
-    this.listenTo(this.model, 'sync change', this.render);
-    this.listenTo(items, 'add', this.render);
-
-    // this.listenTo(this.subviews(), 'add remove', this.render); //don't need yet
+    this.listenTo(this.model, 'sync change:title change:description', this.render);
+    this.listenTo(items, 'sort', function() {console.log('sort callback' + this); });
   },
 
   insertEdit: function(event) {
@@ -64,6 +61,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     $editable.toggleClass('postable');
 
     $editable.html(input);
+    // debugger
+    ///*** FOR SOME REASON THIS DOES NOT KEEP FOCUS WHEN TRIGGERED BY .click() !
     $editable.find('input').focus()
   },
 
@@ -79,7 +78,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
         console.log("Successfully updated .postable list: " + resp.attributes);
       },
       error: function(resp) {
-        console.log("Error in updating .postable: " + resp);
+        console.log("Error in updating .postable list: " + resp);
       }
     });
   },
@@ -100,22 +99,33 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
         item.save({});
       }
     })
+
+    var that = this;
     //can refactor this into an Items collection factory method
     var blankItem = items.create({
                                     title: '',
                                     description: 'New description',
                                     list_id: this.model.get('id'),
                                     rank: targetRank + 1,
-                                },{
-                                  wait: true,
-                                  success: function(resp) {console.log('goddammit it saved!')},
-                                  error: function(resp) {console.log('no savey new')},
-                                });
+                                }, {
+                                    wait: true,
+
+//actually should write a subview-sort method using $(selector).index(subview.$el);
+                                    success: function() {console.log('creating item'); },
+                                   }
+                                );
     var _blankItem = new Asana.Views._Item({
                                         model: blankItem,
                                         project_id: this.model.get('project_id'),
                                           });
-    this.addSubview('#list-items', _blankItem.render());
+    var renderedBlank = _blankItem.render();
+    this.addSubview('#list-items', renderedBlank);
+    // this issue is that the collection is sorted, but the subview is appended to the end of the subviews array.
+    // We need to sort the subviews, or clear and reattach them in collection order.
+    // debugger
+    // click the newly DOM-added element
+    // debugger
+    renderedBlank.$el.find('.editable').click();
 
     //now focus it and trigger click events on this new subview (ie move the cursor down there)
   },
@@ -129,6 +139,14 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     }
   },
 
+  // compareBy: function(subviewA, subviewB) {
+  //   var result = subviewA.model.get('rank') - subviewB.model.get('rank');
+  //   if (result === 0) {
+  //     return -1;
+  //   } else {
+  //     return result;
+  //   }
+  // },
 
   clear: function(event) {
     $(event.target).val('');

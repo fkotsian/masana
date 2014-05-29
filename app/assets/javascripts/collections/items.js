@@ -6,9 +6,7 @@ Asana.Collections.Items = Backbone.Collection.extend({
   url: function() {
     return 'api/lists/' + this.list.escape('id') + '/items';
   },
-  comparator: function (item) {
-    return item.get('rank');
-  },
+  comparator: 'rank',
 
   getOrFetch: function(id) {
     var items = this;

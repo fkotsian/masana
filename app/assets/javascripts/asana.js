@@ -31,6 +31,9 @@ Backbone.CompositeView = Backbone.View.extend({
     var view = this;
     _(this.subviews()).each(function (subviews, selector) {
       view.$(selector).empty();
+      // if (view.compareBy) {
+      //   subviews.sort(view.compareBy);
+      // }
       _(subviews).each(function (subview) {
         view.attachSubview(selector, subview);
       });
