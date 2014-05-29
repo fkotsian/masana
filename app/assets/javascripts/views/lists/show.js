@@ -27,12 +27,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   handleNewItem: function(item){
     console.log('rendering due to new item')
     this.render();
-    //this seems to cause extra items to be added
-    // //focus the input of the newly added item
-    // var newItemRow = this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]');
-    // newItemRow.find('.editable').click();
-    // // debugger
-    // newItemRow.find('.postable input').focus();
   },
 
   events: {

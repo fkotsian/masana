@@ -4,15 +4,16 @@ Asana.Views._Item = Backbone.View.extend({
   initialize: function(options) {
     this.project_id = options.project_id;
 
-    this.listenTo(this.model, 'sync change:title', this.render);
+    this.listenTo(this.model, 'sync', this.render);
   },
 
   events: {
     'click input.submit-assignment-btn': 'assignToUser',
     'click input.assignee-email': 'clear',
-    'blur .postable': 'updateItem',
-    'submit .postable': 'updateItemAndAttachNew',
+    'blur .postable': 'handleInputBlur',
+    'submit .postable': 'handleSubmit',
   },
+
 
   tagName: 'tr',
   className: 'list-item renderable-item',
@@ -23,20 +24,25 @@ Asana.Views._Item = Backbone.View.extend({
     return this;
   },
 
-  updateItem: function(event) {
-    event.preventDefault();
-    var $postable = $(event.target);
-    // $postable.toggleClass('postable');
-    // $postable.toggleClass('editable'); // don't need it bc are rerendering
+  handleInputBlur: function(event){
+    var $postable = $(event.target.parentElement);
+    this.updateItem($postable);
+  },
 
-    var formData = $postable.parent().serializeJSON().item;
+  handleSubmit: function(event){
+    event.preventDefault();
+    var $form = $(event.target);
+    this.updateItem($form);
+  },
+
+  updateItem: function($form) {
+    var formData = $form.serializeJSON().item;
     this.model.save(formData, {
       success: function(resp) {
-        // console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
+        console.log("Successfully updated .postable; rank: " + resp.attributes.rank);
       },
       error: function(resp) {
-        // console.log("Error in updating .postable; rank: " + resp.attributes.rank);
-        debugger
+        console.log("Error in updating .postable; rank: " + resp.attributes.rank);
       }
     });
   },
