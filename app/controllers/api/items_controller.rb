@@ -21,7 +21,7 @@ module Api
         @item.rank = 1
       end
 
-      overlapping_rank_items = Item.where('list_id = ? AND rank >= ?', [ params[:list_id], @item.rank ])
+      overlapping_rank_items = Item.where('list_id = ? AND rank >= ?', params[:list_id], @item.rank )
       overlapping_rank_items.each do |item|
         item.update_attributes({ rank: item.rank + 1 })
       end
@@ -29,6 +29,7 @@ module Api
       if @item.save
         render partial: 'api/items/item', locals: { item: @item }
       else
+        fail
         render json: { errors: @item.errors.full_messages }, status: 422
       end
     end
