@@ -3,6 +3,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   initialize: function () {
     var that = this;
     var items = this.collection = this.model.items();
+    view = this;
 
     if (items.length > 0) {
       items.each(function (item) {
@@ -18,7 +19,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     }
 
     this.listenTo(this.model, 'sync change:title change:description', this.render);
-    this.listenTo(items, 'sort add', function() {console.log('sort callback' + this); });
+
+    this.listenTo(items, 'sort', this.render);
   },
   events: {
     'click .editable': 'insertEdit',
@@ -90,23 +92,26 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     var items = this.model.items();
     items.each(function(item) {
       var thisRank = item.get('rank');
-      console.log(item.get('title') + "'s old rank: " + thisRank);
+      // console.log(item.get('title') + "'s old rank: " + thisRank);
       if (thisRank > threshold) {
         var newRank = parseInt(thisRank) + 1;
-        console.log('updating ' + item.get('title') + " to " + newRank);
+        // console.log('updating ' + item.get('title') + " to " + newRank);
+        item.set('rank', newRank);
         // item.set('rank', newRank);
-        item.save({rank: newRank}, {
+        item.save({}, {
           success: function(updatedItem){
             var newRank = updatedItem.get('rank');
             var data = updatedItem.get('title');
-            console.log(data + "'s new rank: " + newRank);
+            // console.log(data + "'s new rank: " + newRank);
           },
+          wait: true,
           error: function(resp){
-            console.log("ERRORR!@@@@!!!")
+            // console.log("ERRORR!@@@@!!!")
           }
         });
       }
     })
+    items.sort();
   },
 
   attachNewList: function(event) {
@@ -123,7 +128,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       list_id: this.model.get('id'),
       rank: targetRank + 1,
     },  {
-      wait: true,
       success: function() {},
     });
     this.addItemView(blankItem);
