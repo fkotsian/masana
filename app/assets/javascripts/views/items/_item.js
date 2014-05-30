@@ -14,7 +14,8 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.assignee-email': 'clear',
     'blur .postable': 'handleInputBlur',
     'submit .postable': 'handleSubmit',
-    'click .item-delete-btn': 'deleteItem',
+    'click .item-delete-btn': 'handleDeleteButton',
+    'keydown input': 'maybeDelete',
   },
 
   tagName: 'tr',
@@ -69,14 +70,24 @@ Asana.Views._Item = Backbone.View.extend({
     // this.render() // render this model // or use a listener on this.model.sync => render()
   },
 
+  maybeDelete: function(keypress) {
+    if (keypress.which === 8 && $(keypress.target).val() === '') {
+      var $row = $(keypress.target.parentElement.parentElement.parentElement);
+      var targetRank = parseInt($row.find('.item-drag-hook').text());
+      this.deleteItem(targetRank);
+    }
+  },
 
-  deleteItem: function(event) {
+  handleDeleteButton: function(event) {
     var $row = $(event.target.parentElement.parentElement);
     var targetRank = parseInt($row.find('.item-drag-hook').text());
-    debugger
-    this.parent.decrementItems(targetRank);
 
-    debugger
+    this.deleteItem(targetRank);
+  },
+
+  deleteItem: function(itemRank) {
+    this.parent.decrementItems(itemRank);
+
     this.remove();
     this.model.destroy();
   },
