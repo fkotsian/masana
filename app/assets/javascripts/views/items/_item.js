@@ -4,6 +4,7 @@ Asana.Views._Item = Backbone.View.extend({
   initialize: function(options) {
     this.project_id = options.project_id;
 
+    //listen for rank change and re-render
     this.listenTo(this.model, 'sync', this.render);
   },
 
@@ -13,7 +14,6 @@ Asana.Views._Item = Backbone.View.extend({
     'blur .postable': 'handleInputBlur',
     'submit .postable': 'handleSubmit',
   },
-
 
   tagName: 'tr',
   className: 'list-item renderable-item',
