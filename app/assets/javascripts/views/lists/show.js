@@ -24,17 +24,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // this.listenTo(items, 'sort', this.render);
   },
 
-  handleNewItem: function(item){
-    console.log('rendering due to new item')
-    this.render();
-    var newRow = $(this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]')[0]);
-    setTimeout(function(){
-      newRow.find('.editable').click();
-    }, 500);
-
-    console.log('clicking it')
-  },
-
   events: {
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
@@ -95,22 +84,13 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     var items = this.model.items();
     items.each(function(item) {
       var thisRank = item.get('rank');
-      // console.log(item.get('title') + "'s old rank: " + thisRank);
       if (thisRank > threshold) {
         var newRank = parseInt(thisRank) + 1;
-        // console.log('updating ' + item.get('title') + " to " + newRank);
         item.set('rank', newRank);
-        // item.set('rank', newRank);
         item.save({}, {
-          success: function(updatedItem){
-            var newRank = updatedItem.get('rank');
-            var data = updatedItem.get('title');
-            // console.log(data + "'s new rank: " + newRank);
-          },
           wait: true,
-          error: function(resp){
-            // console.log("ERRORR!@@@@!!!")
-          }
+          success: function(updatedItem){},
+          error: function(resp){},
         });
       }
     })
@@ -131,25 +111,31 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       description: 'New description',
       list_id: this.model.get('id'),
       rank: targetRank + 1,
-    },  {
+    }, {
       wait: true,
-      success: function() {},
     });
-    // how does it attach this before the item saves are done?
+    // Refactor: how can we wait til saves are done to do this? Or stack events on top of saves? Need no renders til done.
     this.addItemView(blankItem, targetRank);
     this.collection.trigger('addNewItem', blankItem);
   },
 
 
   addItemView: function(item, index){
-    //index will be new location in list
-    //if an item is already there, it will be moved up
     var _item = new Asana.Views._Item({
       model: item,
       project_id: this.model.get('project_id')
     });
     var renderedItem = _item.render();
     this.addSubview('#list-items', renderedItem, index);
+  },
+
+  handleNewItem: function(item){
+    this.render();
+    var newRow = $(this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]')[0]);
+    // allow delay to account for delay in render(list) due to updating ranks
+    setTimeout(function(){
+      newRow.find('.editable').click();
+    }, 500);
   },
 
   renderInItemPane: function(event) {
@@ -160,6 +146,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       Backbone.history.navigate(url, { trigger: true });
     }
   },
+
   clear: function(event) {
     $(event.target).val('');
   },
