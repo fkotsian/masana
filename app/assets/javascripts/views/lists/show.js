@@ -134,6 +134,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // Refactor: how can we wait til saves are done to do this? Or stack events on top of saves? Need no renders til done.
     this.addItemView(blankItem, targetRank);
     this.collection.trigger('addNewItem', blankItem);
+
+    //NB: New items are still not saved to DB (and so occasionally cannot be accessed by keyup/keydown)
   },
 
 
