@@ -3,6 +3,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   initialize: function () {
     var that = this;
     var items = this.collection = this.model.items();
+    this._currentRank = 1;
     view = this;
 
     if (items.length > 0) {
@@ -20,9 +21,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
     this.listenTo(this.model, 'sync change:title change:description', this.render);
     this.listenTo(this.collection, "addNewItem", this.handleNewItem);
-    // this.listenTo(this.collection, 'decrementItems', this.decrementItems);
-
     // this.listenTo(items, 'sort', this.render);
+
   },
 
   events: {
@@ -32,6 +32,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'submit td.postable': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
+    'keydown input': 'navigateUpOrDown',
   },
 
   className: 'list',
@@ -162,6 +163,26 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
       Backbone.history.navigate(url, { trigger: true });
     }
+  },
+
+  navigateUpOrDown: function(keypress) {
+    console.log('keypress!' + keypress.which)
+    // var dir;
+    if (keypress.which === 40) {
+      // dir = 1;
+      this.setCurrentRank(this._currentRank + 1);
+    } else if (keypress.which === 38) {
+      // dir = -1;
+      this.setCurrentRank(this._currentRank - 1);
+    }
+  },
+
+  setCurrentRank: function(rank) {
+    console.log('setting rank')
+    this._currentRank = rank;
+    var currentItem = $('*[data-item-rank="' + rank + '"]');
+    currentItem.find('.editable').click();
+    currentItem.find('.postable').focus();
   },
 
   clear: function(event) {
