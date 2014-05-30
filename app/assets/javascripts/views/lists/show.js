@@ -168,7 +168,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   navigateUpOrDown: function(keypress) {
-    console.log('keypress!' + keypress.which)
+    console.log('keypress!' + keypress.which + '; ' + this._currentRank)
     // var dir;
     if (keypress.which === 40) {
       // dir = 1;
@@ -180,7 +180,9 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   setCurrentRank: function(rank) {
-    console.log('setting rank')
+    if (rank < 0) { rank = 0 }
+    else if (rank > this.collection.length) { rank = this.collection.length };
+    console.log('setting rank to ' + rank)
     this._currentRank = rank;
     var currentItem = $('*[data-item-rank="' + rank + '"]');
     currentItem.find('.editable').click();
