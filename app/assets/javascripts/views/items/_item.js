@@ -3,6 +3,7 @@ Asana.Views._Item = Backbone.View.extend({
 
   initialize: function(options) {
     this.project_id = options.project_id;
+    this.parent = options.parent;
 
     //listen for rank change and re-render
     this.listenTo(this.model, 'sync', this.render);
@@ -26,13 +27,13 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   handleInputBlur: function(event){
-    console.log('blur from ' + this.model.get('title'));
+    // console.log('blur from ' + this.model.get('title'));
     var $form = $(event.target.parentElement);
     this.updateItem($form);
   },
 
   handleSubmit: function(event){
-    console.log('submit from ' + this.model.get('title'));
+    // console.log('submit from ' + this.model.get('title'));
     event.preventDefault();
     var $form = $(event.target);
     this.updateItem($form);
@@ -68,9 +69,14 @@ Asana.Views._Item = Backbone.View.extend({
     // this.render() // render this model // or use a listener on this.model.sync => render()
   },
 
+
   deleteItem: function(event) {
-    var target = $(event.target);
-    // debugger
+    var $row = $(event.target.parentElement.parentElement);
+    var targetRank = parseInt($row.find('.item-drag-hook').text());
+    debugger
+    this.parent.decrementItems(targetRank);
+
+    debugger
     this.remove();
     this.model.destroy();
   },

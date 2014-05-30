@@ -20,6 +20,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
 
     this.listenTo(this.model, 'sync change:title change:description', this.render);
     this.listenTo(this.collection, "addNewItem", this.handleNewItem);
+    // this.listenTo(this.collection, 'decrementItems', this.decrementItems);
 
     // this.listenTo(items, 'sort', this.render);
   },
@@ -31,8 +32,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'submit td.postable': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
-    // 'click .blank-item': 'subEmptyItem',
-
   },
 
   className: 'list',
@@ -80,6 +79,23 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     });
   },
 
+  decrementItems: function(threshold){
+    console.log('decrementing')
+    var items = this.model.items();
+    items.each(function(item) {
+      var thisRank = item.get('rank');
+      if (thisRank > threshold) {
+        var newRank = parseInt(thisRank) - 1;
+        item.set('rank', newRank);
+        item.save({}, {
+          wait: true,
+          success: function(updatedItem){},
+          error: function(resp){},
+        });
+      }
+    })
+  },
+
   incrementItems: function(threshold){
     var items = this.model.items();
     items.each(function(item) {
@@ -123,7 +139,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   addItemView: function(item, index){
     var _item = new Asana.Views._Item({
       model: item,
-      project_id: this.model.get('project_id')
+      project_id: this.model.get('project_id'),
+      parent: this,
     });
     var renderedItem = _item.render();
     this.addSubview('#list-items', renderedItem, index);
