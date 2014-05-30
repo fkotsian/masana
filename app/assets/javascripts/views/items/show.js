@@ -22,7 +22,6 @@ Asana.Views.ItemShow = Backbone.View.extend({
   className: 'item-show',
 
   render: function () {
-    // alert('rendering item show')
     var renderedContent = this.template({
       item: this.model,
       project: this.project
@@ -66,7 +65,9 @@ Asana.Views.ItemShow = Backbone.View.extend({
     });
   },
 
-  closePane: function(event) {},
+  closePane: function(event) {
+    this.remove();
+  },
 
 
 })

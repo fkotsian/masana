@@ -51,7 +51,7 @@ Asana.Routers.Router = Backbone.Router.extend({
   },
 
   itemShow: function(listId, id) {
-    console.log('in itemsShow');
+    console.log('in itemShow');
     var list = Asana.projects.findList(listId);
     var item = list.items().getOrFetch(id);
     var newItemView = new Asana.Views.ItemShow({

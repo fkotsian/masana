@@ -13,6 +13,7 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.assignee-email': 'clear',
     'blur .postable': 'handleInputBlur',
     'submit .postable': 'handleSubmit',
+    'click .item-delete-btn': 'deleteItem',
   },
 
   tagName: 'tr',
@@ -26,8 +27,8 @@ Asana.Views._Item = Backbone.View.extend({
 
   handleInputBlur: function(event){
     console.log('blur from ' + this.model.get('title'));
-    var $postable = $(event.target.parentElement);
-    this.updateItem($postable);
+    var $form = $(event.target.parentElement);
+    this.updateItem($form);
   },
 
   handleSubmit: function(event){
@@ -65,6 +66,13 @@ Asana.Views._Item = Backbone.View.extend({
     });
     // possibly trigger collection to re-render (need listener on collection)
     // this.render() // render this model // or use a listener on this.model.sync => render()
+  },
+
+  deleteItem: function(event) {
+    var target = $(event.target);
+    // debugger
+    this.remove();
+    this.model.destroy();
   },
 
   clear: function(event) {
