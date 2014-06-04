@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Asana</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body id='devise-bg'>
+
+  <nav>
+    <div class='navbar-default navbar-fixed-top white' role='navigation'>
+      <div class='devise-header center cursive'>
+      
+        <h1 class=''> Welcome to <%= image_tag 'logo.png', length: '100px', width: '150px', style: "padding-bottom:11px" %></h1>
+      
+      </div>
+    </div>
+  </nav>
+
+  <br><br><br>
+      
+  <div class='container devise-body'>
+
+    <div class='row'>
+      <p class='success'><%= notice || flash[:success] %></p>
+      <p class='errors'><%=  alert  || flash[:errors] %></p>
+    </div>
+    
+    <div class='row'>
+      <div class='col-xs-offset-4 col-xs-4'>
+        <div class='jumbotron'>
+    
+          <%= yield %>
+
+        </div>
+      </div>
+    </div>
+  </div>        
+</div>
+
+</body>
+</html>

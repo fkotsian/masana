@@ -17,6 +17,7 @@
  */
 
 @import 'bootstrap';
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
 
 ///* CSS reset */
 //body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
@@ -37,6 +38,10 @@ p.success, p.errors, .no-margin {
   margin-right: 0;
   border-left: 0;
   border-right: 0;
+}
+
+.cursive {
+  font-family: 'Pacifico', cursive;
 }
 
 .editable {

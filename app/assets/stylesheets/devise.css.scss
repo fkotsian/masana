@@ -1,0 +1,37 @@
+#devise-bg {
+  background: url('background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.white {
+  background-color: white;
+}
+
+.devise-header {
+  color: #1f8dd6;
+  line-height: 0;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.devise-body {
+  margin-top: 80px;
+  
+  .jumbotron {
+    margin-top: 29px;
+    margin-left: 50px;
+    padding-top: 28px;
+  }
+  
+  .alert {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.form-control {
+  font-size: 18px;
+}
