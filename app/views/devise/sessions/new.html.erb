@@ -3,11 +3,11 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'form-horizontal') do |f| %>
 
 <div class='form-group'>
-  <%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Email address' %>
+  <%= f.email_field :email, autofocus: true, class: 'form-control', id: 'email_field', placeholder: 'Email address' %>
 </div>
 
 <div class='form-group'>
-  <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password' %>
+  <%= f.password_field :password, autocomplete: "off", class: 'form-control', id: 'password_field', placeholder: 'Password' %>
 </div>
 
 <% if devise_mapping.rememberable? -%>
@@ -17,9 +17,27 @@
 <% end %>
 
 <div class='form-group'>
-  <%= f.submit "Sign in", class: 'btn btn-primary form-control' %>
+  <%= f.submit "Sign in", class: 'btn btn-primary form-control', id: 'sign_in_btn' %>
+</div>
+
+<hr>
+<p class='cursive'>Employer? Click here to sign in</p>
+
+<div class='form-group'>
+  <%= f.submit "Employer Sign In", class: 'btn btn-warning form-control', id: 'guest_login' %>
 </div>
 <% end %>
 
+<hr>
+<p class='cursive'>Don't have an account?</p>
+
 <%= render "devise/shared/links" %>
 
+<script type='text/javascript'>
+  $('#guest_login').on('click', function(event) {
+    event.preventDefault();
+    $('#email_field').val('hi@yourname.com');
+    $('#password_field').val('checkmeout');
+    $('#sign_in_btn').click();
+  });
+</script>

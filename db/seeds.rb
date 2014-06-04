@@ -7,8 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 guest = User.create([
-  { email: "warren@buffett.com",
-    password: "adollaraday"   }
+  { email: "hi@yourname.com",
+    password: "checkmeout"   }
 ])
 
 projects = Project.create([

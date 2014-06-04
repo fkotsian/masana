@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<p class='success'><%= notice || flash[:success] %></p>
-<p class='errors'><%=  alert  || flash[:errors] %></p>
-
+<div class='alert'>
+  <p class='success alert-success'><%= flash[:success] %></p>
+  <p class='errors alert-danger'><%=  alert  || flash[:errors] %></p>
+</div>
 
 <%= yield %>
 

@@ -19,14 +19,12 @@
   </nav>
 
   <br><br><br>
-      
-  <div class='container devise-body'>
+  <div class='container alert alert-danger'>
+    <p class='success'><%= notice || flash[:success] %></p>
+    <p class='errors'><%=  alert  || flash[:errors] %></p>
+  </div>      
 
-    <div class='row'>
-      <p class='success'><%= notice || flash[:success] %></p>
-      <p class='errors'><%=  alert  || flash[:errors] %></p>
-    </div>
-    
+  <div class='container devise-body'>
     <div class='row'>
       <div class='col-xs-offset-4 col-xs-4'>
         <div class='jumbotron'>
