@@ -18,10 +18,10 @@
     </div>
   </nav>
 
-  <br><br><br>
-  <div class='container alert alert-danger'>
-    <p class='success'><%= notice || flash[:success] %></p>
-    <p class='errors'><%=  alert  || flash[:errors] %></p>
+  <br>
+  <div class='container alert'>
+    <p class='success alert-success'><%= flash[:success] %></p>
+    <p class='errors alert-danger'><%=  alert  || flash[:errors] %></p>
   </div>      
 
   <div class='container devise-body'>

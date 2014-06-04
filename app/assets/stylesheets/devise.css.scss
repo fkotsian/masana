@@ -17,6 +17,16 @@
   margin-right: 200px;
 }
 
+.container.alert {
+//  margin-top: 63px;
+  width: 100%;
+  display: inline-block;
+  
+  .alert-success, .alert-danger {
+    padding: 0;
+  }
+}
+
 .devise-body {
   margin-top: 80px;
   
@@ -24,13 +34,6 @@
     margin-top: 29px;
     margin-left: 50px;
     padding-top: 28px;
-  }
-  
-  .alert {
-    padding: 0;
-//    margin-top: 80px;
-    
-    display: inline-block;
   }
 }
 
