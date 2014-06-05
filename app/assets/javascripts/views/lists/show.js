@@ -1,10 +1,10 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
-    // 'click .editable': 'insertEdit',
+    'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
-    'submit td.postable': 'attachNewList',
+    'submit input.postable': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
     'keydown input': 'navigateUpOrDown',
@@ -46,6 +46,16 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.listenTo(this.collection, "addNewItem", this.handleNewItem);
     // this.listenTo(items, 'sort', this.render);
 
+    // setInterval(10, saveMyWork);
+  },
+  
+  saveMyWork: function() {
+    // find form (add id to it - listItems form)
+    // submit form
+    // but preventDefault, don't re-render
+    // implement concurrent-typers (if type in _item have to render in _itemView)
+    
+    // alternatively to async save: Asana seems to have async save, AND a save every time we enter/leave the _item form. We can do that too. Say, 30 seconds save-all, save _item model when leave (up/down/submit). Still need JQuery concurrent-typer (easy enough bc _item is a subview, can $ on it.)
   },
 
   insertEdit: function(event) {
