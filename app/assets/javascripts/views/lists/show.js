@@ -171,9 +171,9 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   renderInItemPane: function(event) {
-    var $renderable = $(event.target.parentElement);
+    var $renderable = $(event.target).closest('tr');
     var itemId = $renderable.find('.item-assignee-btn').attr('data-id');
-    
+    console.log('Now editing: ' + itemId)
     var item = this.collection.getOrFetch(itemId);
     var newItemView = new Asana.Views.ItemShow({
       model: item,
