@@ -10,7 +10,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'keydown input': 'navigateUpOrDown',
   },
   
-  className: 'list row',
+  className: 'row',
   render: function () {
     console.log('rendering')
     var renderedContent = this.template({ list: this.model });
