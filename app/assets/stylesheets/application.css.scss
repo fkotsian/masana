@@ -61,8 +61,97 @@ p.success, p.errors, .no-margin {
 #logo-box {
 }
 
+body {
+  font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
+  background-color: #ced7e0;
+//  background-image: -webkit-gradient(linear, left top, left bottom, from(#dde4ea), color-stop(100%, #ced7e0));
+//  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
+//  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  color: #212f40;
+  border-top: 1px solid #9cacbc;
+  height: 100%;
+  width: 100%;
+//  box-sizing: border-box;
+//  -moz-box-sizing: border-box;
+//  -webkit-box-sizing: border-box;
+
+  line-height: 1;
+}
+
+.container {
+  width: 1580px;
+
+  ul {
+    list-style: none;
+    list-style-type: none;
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+}
+
+/* ------------Projects--------------- */
+#projects-pane {
+  padding-left: 0;
+  padding-right: 0;
+
+  ul#projects {
+    li.project-title {
+      display: box;
+      font-size: 12px;
+    }
+
+    li.project-list {
+      text-shadow: 0px 1px rgba(255, 255, 255, 0.5);
+      color: #212f40;
+      font-size: 12px;
+      line-height: 24px;
+      height: 24px;
+      margin-bottom: 1px;
+      border-left: 5px solid transparent;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 9px;
+      display: block;
+      overflow: hidden;
+    }
+  }
+}
+
+.project-box {
+
+  border-top: 1px solid #9cacbc;
+  border-bottom: 1px solid #9cacbc;
+  margin-bottom: 1px;
+  height: 23px;
+
+  background-color: #ced7e0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ecf0f3), color-stop(100%, #ced7e0));
+  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
+  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
+
+  box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+  -moz-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+  -webkit-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
+
+  color: #596573;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-shadow: 0 1px #ecf0f3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 100%;
+  padding: 7px 5px 3px 14px;
+}
+
+/* --------------ListShow------------------ */
+
 .editable {
-  border-bottom: 1px solid #DCDCDC;
+//  border-bottom: 1px solid #DCDCDC;
   border-radius: 3px;
   padding-top: 3px;
   padding-bottom: 3px;
@@ -106,65 +195,6 @@ p.editable {
   }
 }
 
-body {
-  font-family: proxima-nova, "Helvetica Neue", Arial, sans-serif;
-  background-color: #ced7e0;
-//  background-image: -webkit-gradient(linear, left top, left bottom, from(#dde4ea), color-stop(100%, #ced7e0));
-//  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
-//  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #dde4ea);
-  overflow: hidden;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  color: #212f40;
-  border-top: 1px solid #9cacbc;
-  height: 100%;
-  width: 100%;
-//  box-sizing: border-box;
-//  -moz-box-sizing: border-box;
-//  -webkit-box-sizing: border-box;
-
-  line-height: 1;
-}
-
-.container {
-  width: 1580px;
-
-  ul {
-    list-style: none;
-    list-style-type: none;
-    margin-left: 0px;
-    padding-left: 0px;
-  }
-}
-
-#projects-pane {
-  padding-left: 0;
-  padding-right: 0;
-
-  ul#projects {
-    li.project-title {
-      display: box;
-      font-size: 12px;
-    }
-
-    li.project-list {
-      text-shadow: 0px 1px rgba(255, 255, 255, 0.5);
-      color: #212f40;
-      font-size: 12px;
-      line-height: 24px;
-      height: 24px;
-      margin-bottom: 1px;
-      border-left: 5px solid transparent;
-      padding-top: 0px;
-      padding-right: 0px;
-      padding-bottom: 0px;
-      padding-left: 9px;
-      display: block;
-      overflow: hidden;
-    }
-  }
-}
-
 .list {
 //  padding-left: 0;
 //  padding-right: 0;
@@ -177,10 +207,11 @@ body {
   border-radius: 6px 0px 0px 0px;
   -webkit-border-radius: 6px 0px 0px 0px;
 
-  // transitions - can copy from asana
+  // transitions - can get from asana
 
   .list-pane-top {
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   .navbar {
@@ -224,7 +255,6 @@ body {
       line-height: 100%;
       white-space: nowrap;
       cursor: pointer;
-
     }
   }
 
@@ -242,8 +272,8 @@ body {
          padding-top: 12px;
          padding-left: 0px;
          padding-right: 0px;
-         border-top: 1px solid transparent;
-         border-bottom: 1px solid transparent;
+//         border-top: 1px solid transparent;
+//         border-bottom: 1px solid transparent;
          overflow: hidden;
          background-color: #f2f2f2;
        }
@@ -255,8 +285,8 @@ body {
         padding-top: 12px;
         padding-left: 0px;
         padding-right: 0px;
-        border-top: 1px solid transparent;
-        border-bottom: 1px solid transparent;
+//        border-top: 1px solid transparent;
+//        border-bottom: 1px solid transparent;
 //        overflow: hidden;
       }
 
@@ -291,10 +321,20 @@ body {
         }
       }
 
-      .item-title {}
+      .item-title {
+        
+        input {
+          border: none;
+          outline: none;
+          box-shadow: none;
+          appearance: none;
+          -webkit-appearance: none;
+          -webkit-border-radius: 0;
+        }
+      }
 
       .item-collapse-btn {
-        float: right;
+//        float: right;
         padding-right: 16px;
       }
 
@@ -307,6 +347,8 @@ body {
 
 
 }
+
+/* ---------------Items----------------- */
 
 #item-pane{
   background-color: white;
@@ -338,29 +380,3 @@ body {
 
 }
 
-.box-display {
-
-  border-top: 1px solid #9cacbc;
-  border-bottom: 1px solid #9cacbc;
-  margin-bottom: 1px;
-  height: 23px;
-
-  background-color: #ced7e0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#ecf0f3), color-stop(100%, #ced7e0));
-  background-image: -moz-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
-  background-image: -ms-linear-gradient(90deg, #ced7e0 0%, #ecf0f3);
-
-  box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
-  -moz-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
-  -webkit-box-shadow: inset 0px 1px white, 0px 1px #ecf0f3;
-
-  color: #596573;
-  text-transform: uppercase;
-  font-weight: 600;
-  text-shadow: 0 1px #ecf0f3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 100%;
-  padding: 7px 5px 3px 14px;
-}

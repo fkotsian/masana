@@ -8,15 +8,19 @@
       <span class='glyphicon glyphicon-user'></span>
     </a>
     <div class='dropdown-menu'>
-      <form>
-        <label>Assignee
-          <input class='assignee-email' type='text' name='new_assignee_email' value=<%= item.escape('user_id') || 'Email address' %>></input>
-        </label>
-        <input class='submit-assignment-btn' type='submit' value='Assign to Me'>
+      <form class='form-horizontal'>
+        <div class='form-group'>
+          <label>Assignee
+            <input class='assignee-email' type='text' name='new_assignee_email' value=<%= item.escape('user_id') || 'Email address' %>></input>
+          </label>
+          <input class='submit-assignment-btn form-control' type='submit' value='Assign to Me'>
+        </div>
       </form>
     </div>
   </div>
 </td>
-<td class='item-title editable'><%= item.escape('title') %></td>
+<td class='item-title noneditable form-group'>
+  <input class='postable form-control' type="text" value="<%= item.escape('title') %>" name="item[title]"></input>
+</td>
 <td class='item-delete'><button class='item-delete-btn'>Del</button></td>
 <td class='item-collapse-btn'><span class='glyphicon glyphicon-chevron-left'></td>

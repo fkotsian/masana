@@ -1,7 +1,7 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
-    'click .editable': 'insertEdit',
+    // 'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
     'submit td.postable': 'attachNewList',
