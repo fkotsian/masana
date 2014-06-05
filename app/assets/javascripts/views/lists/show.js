@@ -1,5 +1,25 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
+  events: {
+    'click .editable': 'insertEdit',
+    'blur h3.postable, p.postable': 'updateList',
+    'submit h3.postable, p.postable': 'updateList',
+    'submit td.postable': 'attachNewList',
+    // 'click p.postable': 'clear',
+    'click .renderable-item': 'renderInItemPane',
+    'keydown input': 'navigateUpOrDown',
+  },
+  
+  className: 'list',
+  render: function () {
+    console.log('rendering')
+    var renderedContent = this.template({ list: this.model });
+    this.$el.html(renderedContent);
+    this.attachSubviews();
+
+    return this;
+  },
+
   initialize: function () {
     var that = this;
     var items = this.collection = this.model.items();
@@ -18,31 +38,14 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       });
       this.addItemView(blankItem);
     }
+    
+    var defaultItem = items.first();
+    this.createItemPane(defaultItem);
 
     this.listenTo(this.model, 'sync change:title change:description', this.render);
     this.listenTo(this.collection, "addNewItem", this.handleNewItem);
     // this.listenTo(items, 'sort', this.render);
 
-  },
-
-  events: {
-    'click .editable': 'insertEdit',
-    'blur h3.postable, p.postable': 'updateList',
-    'submit h3.postable, p.postable': 'updateList',
-    'submit td.postable': 'attachNewList',
-    // 'click p.postable': 'clear',
-    'click .renderable-item': 'renderInItemPane',
-    'keydown input': 'navigateUpOrDown',
-  },
-
-  className: 'list',
-  render: function () {
-    console.log('rendering')
-    var renderedContent = this.template({ list: this.model });
-    this.$el.html(renderedContent);
-    this.attachSubviews();
-
-    return this;
   },
 
   insertEdit: function(event) {
@@ -156,6 +159,14 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     setTimeout(function(){
       newRow.find('.editable').click();
     }, 500);
+  },
+  
+  createItemPane: function(item) {
+    var itemView = new Asana.Views.ItemShow({
+      model:   item,
+      project: this.model.project_id,
+    });
+    this.addSubview('#item-pane', itemView);
   },
 
   renderInItemPane: function(event) {
