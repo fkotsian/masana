@@ -166,16 +166,27 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       model:   item,
       project: this.model.project_id,
     });
+    this._itemView = itemView;
     this.addSubview('#item-pane', itemView);
   },
 
   renderInItemPane: function(event) {
     var $renderable = $(event.target.parentElement);
     var itemId = $renderable.find('.item-assignee-btn').attr('data-id');
-    if (itemId) {
-      var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
-      Backbone.history.navigate(url, { trigger: true });
-    }
+    
+    var item = this.collection.getOrFetch(itemId);
+    var newItemView = new Asana.Views.ItemShow({
+      model: item,
+      projectId: this.model.get('project_id')
+    });
+    this.removeSubview('#item-pane', this._itemView);
+    this._itemView = newItemView;
+    this.addSubview('#item-pane', newItemView);
+     
+    // if (itemId) {
+    //   var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
+    //   // Backbone.history.navigate(url, { trigger: true });
+    // }
   },
 
   navigateUpOrDown: function(keypress) {

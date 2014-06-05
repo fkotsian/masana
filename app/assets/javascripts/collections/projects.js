@@ -30,7 +30,6 @@ Asana.Collections.Projects = Backbone.Collection.extend({
         return list;
       }
     };
-
   },
 
   initialize: function() {},
