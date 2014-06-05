@@ -1,25 +1,29 @@
-<div class='list-pane-top'>
-  <h3 class='editable'><%= list.escape('title') %></h3>
-  <p class='editable'><%= list.escape('description') %></p>
+<div class='col-md-8'>
+  <div class='list-pane-top'>
+    <h3 class='editable'><%= list.escape('title') %></h3>
+    <p class='editable'><%= list.escape('description') %></p>
+  </div>
+
+  <div class='list-pane-bottom'>
+    <nav class='navbar'>
+      <ul class='nav nav-pills' id='navbar'>
+        <li class='nav-element'><a href='#'>
+            <span class='glyphicon glyphicon-list'></span>  List
+        </a></li>
+        <li class='nav-element'><a href='#'>
+          <span class='glyphicon glyphicon-calendar'></span> Calendar</a></li>
+        <li class='nav-element'><a href='#'>View</a></li>
+        <li class='nav-element navbar-right'><a href='#'>New</a></li>
+      </ul>
+    </nav>
+    <table id='list-items' class='table'>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<div class='list-pane-bottom'>
-  <nav class='navbar'>
-    <ul class='nav nav-pills' id='navbar'>
-      <li class='nav-element'><a href='#'>
-          <span class='glyphicon glyphicon-list'></span>  List
-      </a></li>
-      <li class='nav-element'><a href='#'>
-        <span class='glyphicon glyphicon-calendar'></span> Calendar</a></li>
-      <li class='nav-element'><a href='#'>View</a></li>
-      <li class='nav-element navbar-right'><a href='#'>New</a></li>
-    </ul>
-  </nav>
-  <table id='list-items' class='table'>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-
-<div id='item-pane'>
+<div class='col-md-4'>
+  <div id='item-pane'>
+  </div>
 </div>

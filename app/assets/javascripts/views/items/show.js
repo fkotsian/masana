@@ -1,17 +1,5 @@
 Asana.Views.ItemShow = Backbone.View.extend({
   template: JST['items/item'],
-
-  initialize: function(options) {
-    this.projectId = options.projectId;
-    this.project = Asana.projects.get(this.projectId);
-    if (!this.project) {
-      this.project = new Asana.Models.Project();
-    }
-
-    this.listenTo(this.model, 'sync change', this.render);
-    // this.listenTo(this.model.list, 'sync', this.render)
-  },
-
   events: {
     'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateItem',
@@ -20,7 +8,6 @@ Asana.Views.ItemShow = Backbone.View.extend({
   },
 
   className: 'item-show',
-
   render: function () {
     var renderedContent = this.template({
       item: this.model,
@@ -31,6 +18,17 @@ Asana.Views.ItemShow = Backbone.View.extend({
     // attach comments as a subview; if this.model then attach
 
     return this;
+  },
+
+  initialize: function(options) {
+    this.projectId = options.projectId;
+    this.project = Asana.projects.get(this.projectId);
+    if (!this.project) {
+      this.project = new Asana.Models.Project();
+    }
+
+    this.listenTo(this.model, 'sync change', this.render);
+    // this.listenTo(this.model.list, 'sync', this.render)
   },
 
   insertEdit: function(event) {
