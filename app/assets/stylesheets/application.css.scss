@@ -80,6 +80,7 @@ body {
 
 .container {
 //  width: 1580px;
+  width: 100%;
 
   ul {
     list-style: none;
@@ -251,6 +252,7 @@ p.editable {
 //  padding-right: 0;
   height: 100%;
   padding: 0;
+  margin-top: 4;
 
   background-color: white;
   border: 1px solid #9cacbc;
@@ -414,9 +416,11 @@ p.editable {
 
 #item-pane{
   background-color: white;
+  padding: 0;
+  margin-top: 4px;
+  margin-right: 16px;
   border: 1px solid #9cacbc;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 0;
   border-radius: 0px 6px 0px 0px;
   -webkit-border-radius: 0px 6px 0px 0px;
 
