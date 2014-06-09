@@ -79,7 +79,7 @@ body {
 }
 
 .container {
-  width: 1580px;
+//  width: 1580px;
 
   ul {
     list-style: none;
@@ -109,8 +109,10 @@ body {
     background-color: #ced7e0;
     border-top: 1px solid #9cacbc;
     border-bottom: 1px solid #9cacbc;    
-    
-  }
+    border-right: 1px solid #9cacbc;       
+    box-shadow: inset 0px -1px #ecf0f3, 0px 1px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0px -1px #ecf0f3, 0px 1px 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0px -1px #ecf0f3, 0px 1px 1px rgba(0, 0, 0, 0.1);  }
 
   ul#projects {
     margin-bottom: 0px;
