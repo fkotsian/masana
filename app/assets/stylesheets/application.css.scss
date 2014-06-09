@@ -252,7 +252,7 @@ p.editable {
 //  padding-right: 0;
   height: 100%;
   padding: 0;
-  margin-top: 4;
+  margin-top: 4px;
 
   background-color: white;
   border: 1px solid #9cacbc;
@@ -309,6 +309,9 @@ p.editable {
       white-space: nowrap;
       cursor: pointer;
     }
+  }
+  
+  #list-pane-bottom {
   }
 
   #list-items {
