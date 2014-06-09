@@ -24,8 +24,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   debug: function (event) {
     event.preventDefault();
     console.log('preventing full-form submit')
-    /*This is for now. 
-      Refactor: to submit whole form, update each item to have unique _name_, 
+    /*Refactor: to submit whole form, update each item to have unique _name_, 
       then nest all _items under _list_.
       This will save all the items to the list model. 
       Probably need a handler for saving this._items in the List model. */
@@ -68,26 +67,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     
     // alternatively to async save: Asana seems to have async save, AND a save every time we enter/leave the _item form. We can do that too. Say, 30 seconds save-all, save _item model when leave (up/down/submit). Still need JQuery concurrent-typer (easy enough bc _item is a subview, can $ on it.)
   },
-
-  // insertEdit: function(event) {
-  //   $editable = $(event.target);
-  //   switch ($editable.prop('tagName')) {
-  //   case 'H3':
-  //     input = '<form><input type="text" value="' + $editable.text() + '" name="list[title]"></input></form>';
-  //     break;
-  //   case 'P':
-  //     input = '<form><input type="text" value="' + $editable.text() + '" name="list[description]"></input></form>';
-  //     break;
-  //   default:
-  //     input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
-  //   }
-  //   $editable.toggleClass('editable');
-  //   $editable.toggleClass('postable');
-  // 
-  //   $editable.html(input);
-  // 
-  //   $editable.find('input').focus()
-  // },
 
   updateList: function(event) {
     console.log('updating list!')
@@ -230,8 +209,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     console.log('setting rank to ' + rank)
     this._currentRank = rank;
     var currentItem = $('*[data-item-rank="' + rank + '"]');
-    debugger
-    // currentItem.find('.editable').click();
     currentItem.find('.postable').focus();
   },
 

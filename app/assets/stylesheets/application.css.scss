@@ -319,6 +319,18 @@ p.editable {
     border-top: 0px;
     margin: 0;
 
+    .selected {
+      background-color: #deeff5;
+      
+      .invisible {
+        visibility: visible;
+      }
+      
+      .postable: {
+        background: transparent;
+      }
+    }
+
     .list-item {
       width: 100%;
       border-bottom: 1px solid black;
@@ -328,7 +340,7 @@ p.editable {
           visibility: visible;
         }
       }
-
+      
       .item-drag-hook {
          text-align: center;
          color: #999999;
@@ -337,8 +349,8 @@ p.editable {
          padding-top: 12px;
          padding-left: 0px;
          padding-right: 0px;
-//         border-top: 1px solid transparent;
-//         border-bottom: 1px solid transparent;
+      //         border-top: 1px solid transparent;
+      //         border-bottom: 1px solid transparent;
          overflow: hidden;
          background-color: #f2f2f2;
        }
@@ -390,14 +402,16 @@ p.editable {
       }
 
       .item-title {
+        background: inherit;
         
-        input {
+        .postable {
           border: none;
           outline: none;
           box-shadow: none;
           appearance: none;
           -webkit-appearance: none;
           -webkit-border-radius: 0;
+          background: inherit;
         }
       }
 
