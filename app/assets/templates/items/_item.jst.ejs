@@ -1,26 +1,30 @@
 <td class='item-drag-hook'><%= item.escape('rank') %></td>
+
 <td class='item-completed-box'>
   <span class='glyphicon glyphicon-unchecked invisible'></span>
 </td>
-<td class='item-assignee-btn' data-id='<%= item.escape("id")%>'>
-  <div class='dropdown'>
+
+<td class='item-assignee-btn hidden' data-id='<%= item.escape("id")%>'>
+  <div class='dropdown hidden'>
     <a class='dropdown-toggle' data-toggle='dropdown' id='add-member-menu'>
-      <span class='glyphicon glyphicon-user invisible'></span>
+      <span class='glyphicon glyphicon-user'></span>
     </a>
     <div class='dropdown-menu'>
-      <form class='form-horizontal'>
+      <div class='form-horizontal'>
         <div class='form-group'>
           <label>Assignee
             <input class='assignee-email' type='text' name='new_assignee_email' value=<%= item.escape('user_id') || 'Email address' %>></input>
           </label>
-          <input class='submit-assignment-btn form-control' type='submit' value='Assign to Me'>
+          <input class='submit-assignment-btn form-control' type='submit' value='Assign to Me'></input>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </td>
+
 <td class='item-title noneditable form-group'>
   <input class='postable form-control' type="text" value="<%= item.escape('title') %>" name="item[title]"></input>
 </td>
+
 <td class='item-delete'><button class='item-delete-btn'>Del</button></td>
-<td class='item-collapse-btn'><span class='glyphicon glyphicon-chevron-left'></td>
+<td class='item-collapse-btn'><span class='glyphicon glyphicon-chevron-left'></span></td>

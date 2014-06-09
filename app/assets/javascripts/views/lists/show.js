@@ -1,10 +1,11 @@
 Asana.Views.ListShow = Backbone.CompositeView.extend({
   template: JST['lists/list'],
   events: {
-    'click .editable': 'insertEdit',
+    // 'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
-    'submit input.postable': 'attachNewList',
+    'submit #list-form': 'debug',
+    'submit #list-form': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
     'keydown input': 'navigateUpOrDown',
@@ -18,6 +19,16 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.attachSubviews();
 
     return this;
+  },
+  
+  debug: function (event) {
+    event.preventDefault();
+    console.log('preventing full-form submit')
+    /*This is for now. 
+      Refactor: to submit whole form, update each item to have unique _name_, 
+      then nest all _items under _list_.
+      This will save all the items to the list model. 
+      Probably need a handler for saving this._items in the List model. */
   },
 
   initialize: function () {
@@ -58,31 +69,32 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // alternatively to async save: Asana seems to have async save, AND a save every time we enter/leave the _item form. We can do that too. Say, 30 seconds save-all, save _item model when leave (up/down/submit). Still need JQuery concurrent-typer (easy enough bc _item is a subview, can $ on it.)
   },
 
-  insertEdit: function(event) {
-    $editable = $(event.target);
-    switch ($editable.prop('tagName')) {
-    case 'H3':
-      input = '<form><input type="text" value="' + $editable.text() + '" name="list[title]"></input></form>';
-      break;
-    case 'P':
-      input = '<form><input type="text" value="' + $editable.text() + '" name="list[description]"></input></form>';
-      break;
-    default:
-      input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
-    }
-    $editable.toggleClass('editable');
-    $editable.toggleClass('postable');
-
-    $editable.html(input);
-
-    $editable.find('input').focus()
-  },
+  // insertEdit: function(event) {
+  //   $editable = $(event.target);
+  //   switch ($editable.prop('tagName')) {
+  //   case 'H3':
+  //     input = '<form><input type="text" value="' + $editable.text() + '" name="list[title]"></input></form>';
+  //     break;
+  //   case 'P':
+  //     input = '<form><input type="text" value="' + $editable.text() + '" name="list[description]"></input></form>';
+  //     break;
+  //   default:
+  //     input = '<form><input type="text" value="' + $editable.text() + '" name="item[title]"></input></form>';
+  //   }
+  //   $editable.toggleClass('editable');
+  //   $editable.toggleClass('postable');
+  // 
+  //   $editable.html(input);
+  // 
+  //   $editable.find('input').focus()
+  // },
 
   updateList: function(event) {
+    console.log('updating list!')
     event.preventDefault();
     var $postable = $(event.target);
 
-    var formData = $postable.parent().serializeJSON();
+    var formData = $postable.serializeJSON();
     this.model.save(formData.list, {
       success: function(resp) {
         // console.log("Successfully updated .postable list: " + resp.attributes);
@@ -127,9 +139,10 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   attachNewList: function(event) {
-    console.log('creating new blank item')
-
     event.preventDefault();
+    console.log('creating new blank item')
+    debugger
+    
     var $row = $(event.target.parentElement.parentElement);
     var targetRank = parseInt($row.find('.item-drag-hook').text());
     this.incrementItems(targetRank);
@@ -183,7 +196,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   renderInItemPane: function(event) {
     var $renderable = $(event.target).closest('tr');
     var itemId = $renderable.find('.item-assignee-btn').attr('data-id');
-    console.log('Now editing: ' + itemId)
+    console.log('Now rendering in item pane: ' + itemId)
     var item = this.collection.getOrFetch(itemId);
     var newItemView = new Asana.Views.ItemShow({
       model: item,
@@ -212,12 +225,13 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   setCurrentRank: function(rank) {
-    if (rank < 0) { rank = 0 }
+    if (rank < 1) { rank = 1 }
     else if (rank > this.collection.length) { rank = this.collection.length };
     console.log('setting rank to ' + rank)
     this._currentRank = rank;
     var currentItem = $('*[data-item-rank="' + rank + '"]');
-    currentItem.find('.editable').click();
+    debugger
+    // currentItem.find('.editable').click();
     currentItem.find('.postable').focus();
   },
 

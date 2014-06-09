@@ -6,11 +6,11 @@ Asana.Views._Item = Backbone.View.extend({
     this.parent = options.parent;
 
     //listen for rank change and re-render
-    this.listenTo(this.model, 'sync', this.render);
+    // this.listenTo(this.model, 'sync', this.render);
   },
 
   events: {
-    'click input.submit-assignment-btn': 'assignToUser',
+    // 'click input.submit-assignment-btn': 'assignToUser',
     'click input.assignee-email': 'clear',
     'blur .postable': 'handleInputBlur',
     'submit .postable': 'handleSubmit',
@@ -28,21 +28,23 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   handleInputBlur: function(event){
-    // console.log('blur from ' + this.model.get('title'));
-    var $form = $(event.target.parentElement);
-    this.updateItem($form);
+    console.log('blur from ' + this.model.get('title'));
+    var $input = $(event.target);
+    $input.attr('value', $input.val());
+    this.updateItem($input);
   },
 
   handleSubmit: function(event){
-    // console.log('submit from ' + this.model.get('title'));
     event.preventDefault();
-    var $form = $(event.target);
-    this.updateItem($form);
+    console.log('submit from ' + this.model.get('title'));
+    console.log('handling submit')
+    var $input = $(event.target);
+    this.updateItem($input);
   },
 
-  updateItem: function($form) {
-    var formData = $form.serializeJSON().item;
-    this.model.save(formData, {
+  updateItem: function($input) {
+    var inputData = $input.serializeJSON().item;
+    this.model.save(inputData, {
       success: function(resp) {
         console.log("Successfully updated .postable; title: " + resp.attributes.title);
       },
@@ -55,8 +57,8 @@ Asana.Views._Item = Backbone.View.extend({
   assignToUser: function(event) {
     event.preventDefault();
 
-    var $form = $(event.target).parent();
-    var newAssigneeEmail = $form.serializeJSON().new_assignee_email;
+    var $assignInput = $(event.target).parent();
+    var newAssigneeEmail = $assignInput.serializeJSON().new_assignee_email;
     this.model.save({ 'newAssigneeEmail': newAssigneeEmail },{
       success: function(resp) {
         console.log("Successfully saved assignment: " + resp);
