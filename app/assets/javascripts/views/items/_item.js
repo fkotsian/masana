@@ -12,6 +12,7 @@ Asana.Views._Item = Backbone.View.extend({
   events: {
     // 'click input.submit-assignment-btn': 'assignToUser',
     'click input.assignee-email': 'clear',
+    'focus .postable': 'selectRow',
     'blur .postable': 'handleInputBlur',
     'submit .postable': 'handleSubmit',
     'click .item-delete-btn': 'handleDeleteButton',
@@ -26,18 +27,29 @@ Asana.Views._Item = Backbone.View.extend({
     this.$el.html(renderedContent);
     return this;
   },
+  
+  selectRow: function(event) {
+    var $input = $(event.target);
+    var $row = $input.closest('tr');
+    $row.addClass('selected');
+  },
+  
+  deselectRow: function(event) {
+    var $input = $(event.target);
+    var $row = $input.closest('tr');
+    $row.removeClass('selected');
+  },
 
-  handleInputBlur: function(event){
-    console.log('blur from ' + this.model.get('title'));
+  handleInputBlur: function(event) {
+    this.deselectRow(event);    
     var $input = $(event.target);
     $input.attr('value', $input.val());
     this.updateItem($input);
   },
 
-  handleSubmit: function(event){
+  handleSubmit: function(event) {
     event.preventDefault();
-    console.log('submit from ' + this.model.get('title'));
-    console.log('handling submit')
+    this.deselectRow(event);    
     var $input = $(event.target);
     this.updateItem($input);
   },
