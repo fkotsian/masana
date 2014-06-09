@@ -272,6 +272,13 @@ p.editable {
 
     .list-item {
       width: 100%;
+      border-bottom: 1px solid black;
+      
+      &:hover {
+        .invisible {          
+          visibility: visible;
+        }
+      }
 
       .item-drag-hook {
          text-align: center;
@@ -324,10 +331,12 @@ p.editable {
             }
           }
         }
-
-        :hover {
-          //tooltip? "click to assign this task"
-        }
+      }
+      
+      .item-assignee-btn, .item-completed-box {
+//        .invi {
+//          visibility: hidden;
+//        }
       }
 
       .item-title {
