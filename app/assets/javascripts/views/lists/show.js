@@ -76,7 +76,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   decrementItems: function(threshold){
-    // this._decrementModels(threshold);
+    this._decrementModels(threshold);
     this._decrementViews(threshold);
   },
 
