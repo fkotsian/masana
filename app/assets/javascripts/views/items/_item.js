@@ -4,9 +4,6 @@ Asana.Views._Item = Backbone.View.extend({
   initialize: function(options) {
     this.project_id = options.project_id;
     this.parent = options.parent;
-
-    //listen for rank change and re-render
-    // this.listenTo(this.model, 'sync', this.render);
   },
 
   events: {
