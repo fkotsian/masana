@@ -5,7 +5,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
     'submit #list-form': 'preventWholePost',
-    'submit #list-form': 'attachNewList',
+    'submit input': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
     'keydown input': 'navigateUpOrDown',
@@ -50,7 +50,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // setInterval(10, saveMyWork);
   },
   
-  preventWholePut: function (event) {
+  preventWholePost: function (event) {
     event.preventDefault();
     console.log('preventing full-form submit')
     /*Refactor: to submit whole form, update each item to have unique _name_, 
@@ -59,15 +59,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       Probably need a handler for saving this._items in the List model. */
   },
   
-  saveMyWork: function() {
-    // find form (add id to it - listItems form)
-    // submit form
-    // but preventDefault, don't re-render
-    // implement concurrent-typers (if type in _item have to render in _itemView)
-    
-    // alternatively to async save: Asana seems to have async save, AND a save every time we enter/leave the _item form. We can do that too. Say, 30 seconds save-all, save _item model when leave (up/down/submit). Still need JQuery concurrent-typer (easy enough bc _item is a subview, can $ on it.)
-  },
-
   updateList: function(event) {
     console.log('updating list!')
     event.preventDefault();
@@ -85,6 +76,28 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   decrementItems: function(threshold){
+    this._decrementModels(threshold);
+    this._decrementViews(threshold);
+  },
+
+  _decrementModels: function(threshold){
+    console.log('decrementing')
+    var items = this.model.items();
+    items.each(function(item) {
+      var thisRank = item.get('rank');
+      if (thisRank > threshold) {
+        var newRank = parseInt(thisRank) - 1;
+        item.set('rank', newRank);
+        item.save({}, {
+          wait: true,
+          success: function(updatedItem){},
+          error: function(resp){},
+        });
+      }
+    })
+  },
+  
+  _decrementViews: function(threshold){
     console.log('decrementing')
     var items = this.model.items();
     items.each(function(item) {
@@ -102,7 +115,12 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   incrementItems: function(threshold){
-    var items = this.model.items();
+    this._incrementModels(threshold);
+    this._incrementViews(threshold);
+  },
+  
+  _incrementModels: function(threshold){
+    var items = this.collection;
     items.each(function(item) {
       var thisRank = item.get('rank');
       if (thisRank > threshold) {
@@ -116,31 +134,43 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       }
     })
   },
-
-  attachNewList: function(event) {
-    event.preventDefault();
-    console.log('creating new blank item')
-    
-    var $row = $(event.target.parentElement.parentElement);
-    var targetRank = parseInt($row.find('.item-drag-hook').text());
-    this.incrementItems(targetRank);
-
+  
+  _incrementViews: function(threshold){
+    var items = this.$el.find('.renderable-item');
+    _.each(items, function(item) {
+      // var itemRank = item.data('item-rank');
+      var dragHook = $(item).find('.item-drag-hook');
+      var dispRank = parseInt(dragHook.text());
+      
+      if (dispRank > threshold) {
+        dragHook.text(dispRank + 1);
+      }
+      //handle itemRanks as well:
+      debugger
+      $(item).attr('data-item-rank', dispRank + 1)
+    })
+  },
+  
+  attachNewList: function(prevRank) {
+    this.incrementItems(prevRank);
+    var that = this;
     //can refactor this into an Items collection factory method
+    // it's saing this is a DOM element?
     var blankItem = this.collection.create({
       title: '',
       description: 'New description',
       list_id: this.model.get('id'),
-      rank: targetRank + 1,
+      rank: prevRank + 1,
     }, {
       wait: true,
+      success: function(resp) {
+        that.addItemView(blankItem, prevRank);
+        that.handleNewItem(prevRank + 1);
+      }
     });
-    // Refactor: how can we wait til saves are done to do this? Or stack events on top of saves? Need no renders til done.
-    this.addItemView(blankItem, targetRank);
-    this.collection.trigger('addNewItem', blankItem);
 
-    //NB: New items are still not saved to DB (and so occasionally cannot be accessed by keyup/keydown) -- need to refetch collection
+    //NB: New items are still not saved to collection (and so occasionally cannot be accessed by keyup/keydown) -- need to refetch collection
   },
-
 
   addItemView: function(item, index){
     var _item = new Asana.Views._Item({
@@ -152,12 +182,10 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.addSubview('#list-items', renderedItem, index);
   },
 
-  handleNewItem: function(item){
-    this.render();
-    var newRow = $(this.$el.find('tr[data-item-rank="' + item.get('rank') + '"]')[0]);
-    // allow delay to account for delay in render(list) due to updating ranks
+  handleNewItem: function(rank){
+    var newRow = $(this.$el.find('tr[data-item-rank="' + rank + '"]')[0]);
     setTimeout(function(){
-      newRow.find('.editable').click();
+      newRow.find('.postable').click();
     }, 500);
   },
   
