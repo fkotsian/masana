@@ -81,8 +81,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   _decrementModels: function(threshold){
-    console.log('decrementing')
-    var items = this.model.items();
+    // this is not yet reaching the model
+    var items = this.collection;
     items.each(function(item) {
       var thisRank = item.get('rank');
       if (thisRank > threshold) {
