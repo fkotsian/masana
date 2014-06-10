@@ -110,7 +110,6 @@ Asana.Views._Item = Backbone.View.extend({
     
     this.model.destroy();
     this.remove();
-    // this.parent.removeSubview('#list-items', this);
     this.parent.setCurrentRank(itemRank - 1);
   },
 
