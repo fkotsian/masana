@@ -76,7 +76,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
 
   decrementItems: function(threshold){
-    this._decrementModels(threshold);
+    // this._decrementModels(threshold);
     this._decrementViews(threshold);
   },
 
@@ -98,18 +98,18 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   },
   
   _decrementViews: function(threshold){
-    console.log('decrementing')
-    var items = this.model.items();
-    items.each(function(item) {
-      var thisRank = item.get('rank');
-      if (thisRank > threshold) {
-        var newRank = parseInt(thisRank) - 1;
-        item.set('rank', newRank);
-        item.save({}, {
-          wait: true,
-          success: function(updatedItem){},
-          error: function(resp){},
-        });
+    var items = this.$el.find('.renderable-item');
+    _.each(items, function(item) {
+      var dragHook = $(item).find('.item-drag-hook');
+      var dispRank = parseInt(dragHook.text());
+      debugger
+      if (dispRank > threshold) {
+        dragHook.text(dispRank - 1);
+      } 
+
+      var itemRank = $(item).attr('data-item-rank');
+      if (itemRank > threshold) {
+        $(item).attr('data-item-rank', dispRank - 1)
       }
     })
   },
