@@ -13,7 +13,7 @@
       <div class='devise-header center cursive'>
       
         <h1 class=''> Welcome to <%= image_tag 'logo.png', length: '100px', width: '150px', style: "padding-bottom:11px" %></h1>
-      
+        
       </div>
     </div>
   </nav>
@@ -22,6 +22,8 @@
   <div class='container alert'>
     <p class='success alert-success'><%= flash[:success] %></p>
     <p class='errors alert-danger'><%=  alert  || flash[:errors] %></p>
+
+    
   </div>      
 
   <div class='container devise-body'>
