@@ -14,9 +14,9 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.assignee-email': 'clear',
     'focus .postable': 'selectRow',
     'blur .postable': 'handleInputBlur',
-    'submit .postable': 'handleSubmit',
+    // 'submit .postable': 'handleSubmit',
     'click .item-delete-btn': 'handleDeleteButton',
-    'keydown input': 'maybeDelete',
+    'keydown input': 'maybeDeleteOrAdd',
   },
 
   tagName: 'tr',
@@ -52,6 +52,9 @@ Asana.Views._Item = Backbone.View.extend({
     this.deselectRow(event);    
     var $input = $(event.target);
     this.updateItem($input);
+    
+    var prevRank = this.model.get('rank');
+    this.parent.attachNewList(prevRank);
   },
 
   updateItem: function($input) {
@@ -84,8 +87,10 @@ Asana.Views._Item = Backbone.View.extend({
     // this.render() // render this model // or use a listener on this.model.sync => render()
   },
 
-  maybeDelete: function(keypress) {
-    if (keypress.which === 8 && $(keypress.target).val() === '') {
+  maybeDeleteOrAdd: function(keypress) {
+    if (keypress.which === 13) {
+      this.handleSubmit(keypress);
+    } else if (keypress.which === 8 && $(keypress.target).val() === '') {
       var $row = $(keypress.target.parentElement.parentElement.parentElement);
       var targetRank = parseInt($row.find('.item-drag-hook').text());
       this.deleteItem(targetRank);
