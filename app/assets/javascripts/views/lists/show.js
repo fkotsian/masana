@@ -4,7 +4,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // 'click .editable': 'insertEdit',
     'blur h3.postable, p.postable': 'updateList',
     'submit h3.postable, p.postable': 'updateList',
-    'submit #list-form': 'debug',
+    'submit #list-form': 'preventWholePost',
     'submit #list-form': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
@@ -19,15 +19,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.attachSubviews();
 
     return this;
-  },
-  
-  debug: function (event) {
-    event.preventDefault();
-    console.log('preventing full-form submit')
-    /*Refactor: to submit whole form, update each item to have unique _name_, 
-      then nest all _items under _list_.
-      This will save all the items to the list model. 
-      Probably need a handler for saving this._items in the List model. */
   },
 
   initialize: function () {
@@ -57,6 +48,15 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // this.listenTo(items, 'sort', this.render);
 
     // setInterval(10, saveMyWork);
+  },
+  
+  preventWholePut: function (event) {
+    event.preventDefault();
+    console.log('preventing full-form submit')
+    /*Refactor: to submit whole form, update each item to have unique _name_, 
+      then nest all _items under _list_.
+      This will save all the items to the list model. 
+      Probably need a handler for saving this._items in the List model. */
   },
   
   saveMyWork: function() {
@@ -120,15 +120,13 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   attachNewList: function(event) {
     event.preventDefault();
     console.log('creating new blank item')
-    debugger
     
     var $row = $(event.target.parentElement.parentElement);
     var targetRank = parseInt($row.find('.item-drag-hook').text());
     this.incrementItems(targetRank);
 
-    var items = this.model.items();
     //can refactor this into an Items collection factory method
-    var blankItem = items.create({
+    var blankItem = this.collection.create({
       title: '',
       description: 'New description',
       list_id: this.model.get('id'),
@@ -140,7 +138,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.addItemView(blankItem, targetRank);
     this.collection.trigger('addNewItem', blankItem);
 
-    //NB: New items are still not saved to DB (and so occasionally cannot be accessed by keyup/keydown)
+    //NB: New items are still not saved to DB (and so occasionally cannot be accessed by keyup/keydown) -- need to refetch collection
   },
 
 
