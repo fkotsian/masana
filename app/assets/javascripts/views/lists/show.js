@@ -138,16 +138,16 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
   _incrementViews: function(threshold){
     var items = this.$el.find('.renderable-item');
     _.each(items, function(item) {
-      // var itemRank = item.data('item-rank');
       var dragHook = $(item).find('.item-drag-hook');
       var dispRank = parseInt(dragHook.text());
-      
       if (dispRank > threshold) {
         dragHook.text(dispRank + 1);
+      } 
+
+      var itemRank = $(item).attr('data-item-rank');
+      if (itemRank > threshold) {
+        $(item).attr('data-item-rank', dispRank + 1)
       }
-      //handle itemRanks as well:
-      debugger
-      $(item).attr('data-item-rank', dispRank + 1)
     })
   },
   
