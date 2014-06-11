@@ -5,7 +5,7 @@
 </div>
 
 <div class='item-body'>
-  <p><%= project.escape('title') %></p>
+  <p class='invisible'><%= project.escape('title') %></p>
   <h3 class='editable'><%= item.escape('title') || '(unnamed task)' %></h3>
-  <p class='editable'><%= item.escape('description') || 'Select a task to view its details.' %></p>
+  <p class='editable'><%= item.escape('description') || 'Click to add a description' %></p>
 </div>
