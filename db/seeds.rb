@@ -50,7 +50,7 @@ lists = List.create([
     project_id: 2
   },
   # 6
-  { title: 'Find Polar Bears',
+  { title: 'Meet Warren Buffett',
     project_id: 3
   },
   # 
@@ -61,10 +61,6 @@ lists = List.create([
   { title: 'Chase a Thunderstorm',
     project_id: 3
   },
-  # 9
-  { title: 'Meet Warren Buffett',
-    project_id: 3
-  }
 ])
 
 list_1_items = List.first.items.create([
@@ -87,6 +83,33 @@ list_1_items = List.first.items.create([
     description: "Need: Nautical-themed Pashmina Afghan",
     due_date: Date.today.to_s,
     rank: 4
+  },
+])
+
+list_2_items = List.find(2).items.create([
+  { title: "Ideas go here",
+    rank: 1
+  }
+])
+
+list_6_items = List.find(6).items.create([
+  { title: "Crack stock market",
+    rank: 1
+  },
+  { title: "Get Warren's phone number",
+    rank: 2
+  },
+  { title: "Give financial advice",
+    rank: 3
+  },
+  { title: "Become best friends forever",
+    rank: 4
+  },
+  { title: "Get to call him 'Buffy'",
+    rank: 5
+  },
+  { title: "Retire and live happily ever after",
+    rank: 6
   },
 ])
 
