@@ -25,7 +25,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     var that = this;
     var items = this.collection = this.model.items();
     this._currentRank = 1;
-    view = this;
 
     if (items.length > 0) {
       items.each(function (item, index) {
@@ -33,8 +32,8 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
       });
     } else {
       var blankItem = items.create({
-        title: 'Add an Item',
-        description: 'New description',
+        title: '',
+        description: '',
         list_id: that.model.get('id'),
       });
       this.addItemView(blankItem);
@@ -158,7 +157,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     // it's saing this is a DOM element?
     var blankItem = this.collection.create({
       title: '',
-      description: 'New description',
+      description: '',
       list_id: this.model.get('id'),
       rank: prevRank + 1,
     }, {

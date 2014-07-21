@@ -15,7 +15,7 @@
           <label>Assignee
             <input class='assignee-email' type='text' name='new_assignee_email' value=<%= item.escape('user_id') || 'Email address' %>></input>
           </label>
-          <input class='submit-assignment-btn form-control' type='submit' value='Assign to Me'></input>
+          <input class='submit-assignment-btn form-control' type='submit' placeholder='Assign to Me'></input>
         </div>
       </div>
     </div>
@@ -23,7 +23,7 @@
 </td>
 
 <td class='item-title noneditable form-group'>
-  <input class='postable form-control' type="text" value="<%= item.escape('title') %>" name="item[title]"></input>
+  <input class='postable form-control' type="text" value="<%= item.escape('title') %>" placeholder="Add an item" name="item[title]"></input>
 </td>
 
 <td class='item-delete'><button class='item-delete-btn hidden'>Del</button></td>

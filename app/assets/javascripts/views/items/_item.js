@@ -11,7 +11,7 @@ Asana.Views._Item = Backbone.View.extend({
     'click input.assignee-email': 'clear',
     'focus .postable': 'selectRow',
     'blur .postable': 'handleInputBlur',
-    // 'submit .postable': 'handleSubmit',
+    'submit .postable': 'handleSubmit',
     'click .item-delete-btn': 'handleDeleteButton',
     'keydown input': 'maybeDeleteOrAdd',
   },
@@ -45,10 +45,9 @@ Asana.Views._Item = Backbone.View.extend({
   },
 
   handleSubmit: function(event) {
-    event.preventDefault();
-    this.deselectRow(event);    
-    var $input = $(event.target);
-    this.updateItem($input);
+    console.log("handling submit")
+    // event.preventDefault();
+    this.handleInputBlur(event);
     
     var prevRank = this.model.get('rank');
     this.parent.attachNewList(prevRank);
@@ -103,7 +102,6 @@ Asana.Views._Item = Backbone.View.extend({
 
   deleteItem: function(itemRank) {
     this.parent.decrementItems(itemRank);
-    debugger
     
     this.model.destroy();
     this.remove();
