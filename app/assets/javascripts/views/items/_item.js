@@ -55,9 +55,11 @@ Asana.Views._Item = Backbone.View.extend({
 
   updateItem: function($input) {
     var inputData = $input.serializeJSON().item;
+    var oldItem = this;
     this.model.save(inputData, {
       success: function(resp) {
-        console.log("Successfully updated .postable; title: " + resp.attributes.title);
+        console.log("Successfully updated .postable; title: " + resp.attributes.title + " id: " + resp.attributes.id);
+        oldItem.parent.attachNewList(resp.attributes.id);
       },
       error: function(resp) {
         console.log("Error in updating .postable; rank: " + resp.attributes.rank);

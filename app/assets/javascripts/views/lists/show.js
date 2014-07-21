@@ -101,7 +101,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     _.each(items, function(item) {
       var dragHook = $(item).find('.item-drag-hook');
       var dispRank = parseInt(dragHook.text());
-      debugger
       if (dispRank > threshold) {
         dragHook.text(dispRank - 1);
       } 
