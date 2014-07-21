@@ -38,7 +38,7 @@ Asana.Views.ItemShow = Backbone.View.extend({
       input = '<form><input type="text" value="' + $editable.text() + '" placeholder="Add a description" name="item[description]"></input></form>';
       break;
     default:
-      input = '<form><input type="text" value="' + $editable.text() + '" placeholder="(unnamed task)" name="item[title]"></input></form>';
+      input = '<form><input type="text" value="' + $editable.text() + '" placeholder="New Item" name="item[title]"></input></form>';
    }
     $editable.toggleClass('editable');
     $editable.toggleClass('postable');

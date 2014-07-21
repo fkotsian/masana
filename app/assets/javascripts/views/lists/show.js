@@ -8,6 +8,7 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     'submit input': 'attachNewList',
     // 'click p.postable': 'clear',
     'click .renderable-item': 'renderInItemPane',
+    'focus .renderable-item': 'renderInItemPane',
     'keydown input': 'navigateUpOrDown',
   },
   
@@ -208,11 +209,6 @@ Asana.Views.ListShow = Backbone.CompositeView.extend({
     this.removeSubview('#item-pane', this._itemView);
     this._itemView = newItemView;
     this.addSubview('#item-pane', newItemView);
-     
-    // if (itemId) {
-    //   var url = '#lists/' + this.model.escape('id') + '/items/' + itemId;
-    //   // Backbone.history.navigate(url, { trigger: true });
-    // }
   },
 
   navigateUpOrDown: function(keypress) {
